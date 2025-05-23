@@ -9,21 +9,28 @@ const dotenv = require('dotenv');
 const session = require('express-session')
 
 dotenv.config();
-const db = mariadb.createConnection({host: process.env.DB_HOST,
-                                      user: process.env.DB_USER, 
-                                      password: process.env.DB_PASSWORD, 
-                                      database: process.env.DB_DATABASE,
-                                      port: process.env.DB_PORT});
-// connect to database
-db.connect((err) => {
+
+// Create a connection pool instead of a single connection
+const pool = mariadb.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT,
+  connectionLimit: 5
+});
+
+// Test the connection
+pool.getConnection((err, conn) => {
   if (err) {
-      console.log("Unable to connect to database due to error: " + err);
-	    res.render('error');
-  } else	{
+    console.error("Unable to connect to database:", err);
+  } else {
     console.log("Connected to DB");
+    conn.release();
   }
 });
-global.db = db;
+
+global.db = pool;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -96,7 +103,11 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {
+    message: err.message,
+    error: process.env.NODE_ENV === 'development' ? err : {},
+    status: err.status || 500
+  });
 });
 
 module.exports = app;
