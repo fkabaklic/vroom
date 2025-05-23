@@ -14,12 +14,17 @@ dotenv.config();
 let db;
 const connectDB = async () => {
   try {
+    if (!process.env.DB_HOST || !process.env.DB_USER || !process.env.DB_PASSWORD || !process.env.DB_DATABASE) {
+      console.error("Missing database environment variables");
+      return;
+    }
+
     db = mariadb.createConnection({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      port: process.env.DB_PORT
+      port: process.env.DB_PORT || 3306
     });
 
     db.connect((err) => {
@@ -104,11 +109,10 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+  console.error(err.stack);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
   res.render('error', {
     title: 'Error',
@@ -119,7 +123,11 @@ app.use(function(err, req, res, next) {
 
 // Add a health check endpoint
 app.get('/health', (req, res) => {
-  res.status(200).send('OK');
+  res.status(200).json({
+    status: 'ok',
+    database: db ? 'connected' : 'disconnected',
+    environment: process.env.NODE_ENV || 'development'
+  });
 });
 
 module.exports = app;
