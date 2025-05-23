@@ -77,121 +77,55 @@ app.use((req, res, next) => {
   next();
 });
 
-// Basic routes
-app.get('/', (req, res) => {
-  if (!global.db) {
-    return res.status(500).render('error', {
-      message: 'Database connection error',
-      error: { status: 500 }
-    });
-  }
+// Import routes
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const aboutRouter = require('./routes/about');
+const contactRouter = require('./routes/contact');
+const privacyRouter = require('./routes/privacy');
+const helpRouter = require('./routes/help');
+const customerRouter = require('./routes/customer');
+const vehicleRouter = require('./routes/vehicle');
+const vehiclecatRouter = require('./routes/vehiclecat');
+const hostRouter = require('./routes/host');
+const renterRouter = require('./routes/renter');
+const saleorderRouter = require('./routes/saleorder');
+const searchRouter = require('./routes/search');
+const reportRouter = require('./routes/report');
+const promotionRouter = require('./routes/promotion');
+const catalogRouter = require('./routes/catalog');
 
-  const query = "SELECT vehicle_id, prodimage, description, duration, vehicle_type, daily_fee, renter_id, host_id, review_id, status FROM vehicle WHERE featured = true";
-  
-  global.db.query(query, (err, result) => {
-    if (err) {
-      console.error('Database query error:', err);
-      return res.status(500).render('error', {
-        message: 'Error fetching featured vehicles',
-        error: { status: 500 }
-      });
-    }
-    res.render('index', {
-      title: 'Home',
-      allrecs: result || []
-    });
-  });
-});
-
-app.get('/about', (req, res) => {
-  res.render('about');
-});
-
-app.get('/contact', (req, res) => {
-  res.render('contact');
-});
-
-app.get('/privacy', (req, res) => {
-  res.render('privacy');
-});
-
-app.get('/help', (req, res) => {
-  res.render('help');
-});
-
-// User routes
-app.get('/users', (req, res) => {
-  res.render('users');
-});
-
-// Customer routes
-app.get('/customer', (req, res) => {
-  res.render('customer/index');
-});
-
-// Vehicle routes
-app.get('/vehicle', (req, res) => {
-  res.render('vehicle/index');
-});
-
-// Vehicle category routes
-app.get('/vehiclecat', (req, res) => {
-  res.render('vehiclecat/index');
-});
-
-// Host routes
-app.get('/host', (req, res) => {
-  res.render('host/index');
-});
-
-// Renter routes
-app.get('/renter', (req, res) => {
-  res.render('renter/index');
-});
-
-// Sale order routes
-app.get('/saleorder', (req, res) => {
-  res.render('saleorder/index');
-});
-
-// Search routes
-app.get('/search', (req, res) => {
-  res.render('search');
-});
-
-// Report routes
-app.get('/report', (req, res) => {
-  res.render('report/index');
-});
-
-// Promotion routes
-app.get('/promotion', (req, res) => {
-  res.render('promotion/index');
-});
-
-// Catalog routes
-app.get('/catalog', (req, res) => {
-  res.render('catalog');
-});
+// Register routes
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/about', aboutRouter);
+app.use('/contact', contactRouter);
+app.use('/privacy', privacyRouter);
+app.use('/help', helpRouter);
+app.use('/customer', customerRouter);
+app.use('/vehicle', vehicleRouter);
+app.use('/vehiclecat', vehiclecatRouter);
+app.use('/host', hostRouter);
+app.use('/renter', renterRouter);
+app.use('/saleorder', saleorderRouter);
+app.use('/search', searchRouter);
+app.use('/report', reportRouter);
+app.use('/promotion', promotionRouter);
+app.use('/catalog', catalogRouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  const routes = [];
-  app._router.stack.forEach(middleware => {
-    if (middleware.route) {
-      routes.push({
-        path: middleware.route.path,
-        methods: Object.keys(middleware.route.methods)
-      });
-    }
-  });
-
   res.status(200).json({
     status: 'ok',
     database: db ? 'connected' : 'disconnected',
     environment: process.env.NODE_ENV || 'development',
     timestamp: new Date().toISOString(),
-    routes: routes
+    routes: app._router.stack
+      .filter(r => r.route)
+      .map(r => ({
+        path: r.route.path,
+        methods: Object.keys(r.route.methods)
+      }))
   });
 });
 
