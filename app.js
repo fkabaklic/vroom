@@ -77,23 +77,41 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
-app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
-app.use('/about', require('./routes/about'));
-app.use('/contact', require('./routes/contact'));
-app.use('/privacy', require('./routes/privacy'));
-app.use('/help', require('./routes/help'));
-app.use('/customer', require('./routes/customer'));
-app.use('/vehicle', require('./routes/vehicle'));
-app.use('/vehiclecat', require('./routes/vehiclecat'));
-app.use('/host', require('./routes/host'));
-app.use('/renter', require('./routes/renter'));
-app.use('/saleorder', require('./routes/saleorder'));
-app.use('/search', require('./routes/search'));
-app.use('/report', require('./routes/report'));
-app.use('/promotion', require('./routes/promotion'));
-app.use('/catalog', require('./routes/catalog'));
+// Import routes
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const aboutRouter = require('./routes/about');
+const contactRouter = require('./routes/contact');
+const privacyRouter = require('./routes/privacy');
+const helpRouter = require('./routes/help');
+const customerRouter = require('./routes/customer');
+const vehicleRouter = require('./routes/vehicle');
+const vehiclecatRouter = require('./routes/vehiclecat');
+const hostRouter = require('./routes/host');
+const renterRouter = require('./routes/renter');
+const saleorderRouter = require('./routes/saleorder');
+const searchRouter = require('./routes/search');
+const reportRouter = require('./routes/report');
+const promotionRouter = require('./routes/promotion');
+const catalogRouter = require('./routes/catalog');
+
+// Register routes
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/about', aboutRouter);
+app.use('/contact', contactRouter);
+app.use('/privacy', privacyRouter);
+app.use('/help', helpRouter);
+app.use('/customer', customerRouter);
+app.use('/vehicle', vehicleRouter);
+app.use('/vehiclecat', vehiclecatRouter);
+app.use('/host', hostRouter);
+app.use('/renter', renterRouter);
+app.use('/saleorder', saleorderRouter);
+app.use('/search', searchRouter);
+app.use('/report', reportRouter);
+app.use('/promotion', promotionRouter);
+app.use('/catalog', catalogRouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -101,7 +119,13 @@ app.get('/health', (req, res) => {
     status: 'ok',
     database: db ? 'connected' : 'disconnected',
     environment: process.env.NODE_ENV || 'development',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    routes: app._router.stack
+      .filter(r => r.route)
+      .map(r => ({
+        path: r.route.path,
+        methods: Object.keys(r.route.methods)
+      }))
   });
 });
 
@@ -132,5 +156,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-// Export the Express app
 module.exports = app;
