@@ -77,7 +77,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Define routes directly in app.js for serverless environment
+// Basic routes
 app.get('/', (req, res) => {
   if (!global.db) {
     return res.status(500).render('error', {
@@ -117,6 +117,61 @@ app.get('/privacy', (req, res) => {
 
 app.get('/help', (req, res) => {
   res.render('help');
+});
+
+// User routes
+app.get('/users', (req, res) => {
+  res.render('users');
+});
+
+// Customer routes
+app.get('/customer', (req, res) => {
+  res.render('customer/index');
+});
+
+// Vehicle routes
+app.get('/vehicle', (req, res) => {
+  res.render('vehicle/index');
+});
+
+// Vehicle category routes
+app.get('/vehiclecat', (req, res) => {
+  res.render('vehiclecat/index');
+});
+
+// Host routes
+app.get('/host', (req, res) => {
+  res.render('host/index');
+});
+
+// Renter routes
+app.get('/renter', (req, res) => {
+  res.render('renter/index');
+});
+
+// Sale order routes
+app.get('/saleorder', (req, res) => {
+  res.render('saleorder/index');
+});
+
+// Search routes
+app.get('/search', (req, res) => {
+  res.render('search');
+});
+
+// Report routes
+app.get('/report', (req, res) => {
+  res.render('report/index');
+});
+
+// Promotion routes
+app.get('/promotion', (req, res) => {
+  res.render('promotion/index');
+});
+
+// Catalog routes
+app.get('/catalog', (req, res) => {
+  res.render('catalog');
 });
 
 // Health check endpoint
