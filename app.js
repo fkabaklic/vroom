@@ -9,28 +9,21 @@ const dotenv = require('dotenv');
 const session = require('express-session')
 
 dotenv.config();
-
-// Create a connection pool instead of a single connection
-const pool = mariadb.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  port: process.env.DB_PORT,
-  connectionLimit: 5
-});
-
-// Test the connection
-pool.getConnection((err, conn) => {
+const db = mariadb.createConnection({host: process.env.DB_HOST,
+                                      user: process.env.DB_USER, 
+                                      password: process.env.DB_PASSWORD, 
+                                      database: process.env.DB_DATABASE,
+                                      port: process.env.DB_PORT});
+// connect to database
+db.connect((err) => {
   if (err) {
-    console.error("Unable to connect to database:", err);
-  } else {
+      console.log("Unable to connect to database due to error: " + err);
+	    res.render('error');
+  } else	{
     console.log("Connected to DB");
-    conn.release();
   }
 });
-
-global.db = pool;
+global.db = db;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -49,6 +42,8 @@ var reportRouter = require('./routes/report');
 var promotionRouter = require('./routes/promotion');
 var catalogRouter = require('./routes/catalog');
 
+
+
 var app = express();
 
 // view engine setup
@@ -56,21 +51,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(layouts);
 
-// Configure session for serverless environment
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'vroomAppSecret',
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  }
-}));
-
+app.use(session({secret: 'vroomAppSecret'}));
 app.use(function(req,res,next){
     res.locals.session = req.session;
     next();
 });
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -78,7 +64,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/about', aboutRouter);
@@ -96,6 +81,8 @@ app.use('/report', reportRouter);
 app.use('/promotion', promotionRouter);
 app.use('/catalog', catalogRouter);
 
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -109,19 +96,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: process.env.NODE_ENV === 'development' ? err : {},
-    status: err.status || 500
-  });
+  res.render('error');
 });
-
-// For local development
-if (process.env.NODE_ENV !== 'production') {
-  const port = process.env.PORT || 3000;
-  app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-  });
-}
 
 module.exports = app;
