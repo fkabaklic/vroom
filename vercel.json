@@ -1,11 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "app.js",
-      "use": "@vercel/node"
-    }
-  ],
+  "framework": "node",
+  "buildCommand": "npm install",
+  "outputDirectory": ".",
   "routes": [
     {
       "src": "/public/(.*)",
@@ -13,7 +10,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "app.js"
+      "dest": "/app.js"
     }
   ],
   "env": {
