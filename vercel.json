@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "framework": "node",
-  "buildCommand": "npm install",
-  "outputDirectory": ".",
+  "builds": [
+    {
+      "src": "app.js",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
       "src": "/public/(.*)",
