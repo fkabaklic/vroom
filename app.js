@@ -44,25 +44,6 @@ connectDB();
 
 global.db = db;
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var aboutRouter = require('./routes/about');
-var contactRouter = require('./routes/contact');
-var privacyRouter = require('./routes/privacy');
-var helpRouter = require('./routes/help');
-var customerRouter = require('./routes/customer');
-var vehicleRouter = require('./routes/vehicle');
-var vehiclecatRouter = require('./routes/vehiclecat');
-var hostRouter = require('./routes/host');
-var renterRouter = require('./routes/renter');
-var saleorderRouter = require('./routes/saleorder');
-var searchRouter = require('./routes/search');
-var reportRouter = require('./routes/report');
-var promotionRouter = require('./routes/promotion');
-var catalogRouter = require('./routes/catalog');
-
-
-
 var app = express();
 
 // view engine setup
@@ -70,63 +51,74 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(layouts);
 
-app.use(session({secret: 'vroomAppSecret'}));
+// Session configuration
+app.use(session({
+  secret: 'vroomAppSecret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: process.env.NODE_ENV === 'production' }
+}));
+
 app.use(function(req,res,next){
     res.locals.session = req.session;
     next();
 });
 
-
+// Middleware
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/about', aboutRouter);
-app.use('/contact', contactRouter);
-app.use('/privacy', privacyRouter);
-app.use('/help', helpRouter);
-app.use('/customer', customerRouter);
-app.use('/vehicle', vehicleRouter);
-app.use('/vehiclecat', vehiclecatRouter);
-app.use('/host', hostRouter);
-app.use('/renter', renterRouter);
-app.use('/saleorder', saleorderRouter);
-app.use('/search', searchRouter);
-app.use('/report', reportRouter);
-app.use('/promotion', promotionRouter);
-app.use('/catalog', catalogRouter);
+// Routes
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
+app.use('/about', require('./routes/about'));
+app.use('/contact', require('./routes/contact'));
+app.use('/privacy', require('./routes/privacy'));
+app.use('/help', require('./routes/help'));
+app.use('/customer', require('./routes/customer'));
+app.use('/vehicle', require('./routes/vehicle'));
+app.use('/vehiclecat', require('./routes/vehiclecat'));
+app.use('/host', require('./routes/host'));
+app.use('/renter', require('./routes/renter'));
+app.use('/saleorder', require('./routes/saleorder'));
+app.use('/search', require('./routes/search'));
+app.use('/report', require('./routes/report'));
+app.use('/promotion', require('./routes/promotion'));
+app.use('/catalog', require('./routes/catalog'));
 
-
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  res.status(err.status || 500);
-  res.render('error', {
-    title: 'Error',
-    message: err.message,
-    error: process.env.NODE_ENV === 'development' ? err : {}
-  });
-});
-
-// Add a health check endpoint
+// Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
     database: db ? 'connected' : 'disconnected',
     environment: process.env.NODE_ENV || 'development'
+  });
+});
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  console.log('404 error for path:', req.path);
+  next(createError(404));
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  console.error('Error:', err.message);
+  console.error('Stack:', err.stack);
+  
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error', {
+    title: 'Error',
+    message: err.message,
+    error: process.env.NODE_ENV === 'development' ? err : {}
   });
 });
 
