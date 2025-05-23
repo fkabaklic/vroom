@@ -1,0 +1,16 @@
+<h1> Edit Customer</h1>
+<form action="/host/save" method="post">
+   <input type="hidden" name="host_id" value="<%= onerec.host_id %>" >
+<table>
+	<tr> <td> Name: </td> <td> <input type="text" name="name" value="<%= onerec.name %>"required>  </td> </tr>
+	<tr> <td> Vehicle Type: </td> <td> <select name="vehicle_type" required> 
+			<option selected><%= onerec.vehicle_type %></option>
+			<option>Sedan</option>
+			<option>Sport Car</option>
+			<option>SUV</option>
+			<option>Electric(EV)</option>
+	<tr> <td> Status: </td> <td> <input type="text" name="status" value="<%= onerec.status %>" required>  </td> </tr>
+    <tr> <td> Number of Vehicles: </td> <td> <input type="text" name="num_vehicles" value="<%= onerec.num_vehicles %>" required>  </td> </tr>
+</table>
+<button class="rec" type="submit">Save</button>
+</form>

@@ -1,0 +1,40 @@
+<% var totprice = 0 %>
+<% var lineitemcost = 0 %>
+<% if (cartitems != '0') {%>
+	<table>
+		<tr>
+			<th>Product Image</th>
+			<th>Description</th>
+			<th>Duration</th>
+			<th>Daily Fee</th>
+			<th>Cost</th>
+			<th>Action</th>
+		</tr>
+      		<% cartitems.forEach((item, index) => { %>
+			<tr>
+				<td align="center"><img src="/images/<%= item.prodimage %>" style="width: 100px;"></td>
+				<td><%= item.description %></td>
+				<td><%= item.duration %></td>
+				<td><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format (item.daily_fee) %></td>
+				<% lineitemcost = item.daily_fee * item.duration %>
+				<td><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format (lineitemcost) %> </td>
+				<% totprice = totprice + lineitemcost  %>
+				<td><form action="/catalog/remove" method="post" >
+						<input type="hidden" name="vehicle_id" value=<%= item.vehicle_id %> >
+						<button class="btn3" type="submit">Remove</button>
+					</form></td>
+           		</tr>
+        		<% }); %>
+		<tr >
+			<td colspan="4"><b>Totals</b></td>
+			<td><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format (totprice) %></td>
+			<td><button class='btn2' onclick="window.location.href='/catalog/checkout'">Checkout</button></td>
+		</tr>
+	</table>
+<% } else { %>
+
+	<div class="hero-content">
+        <h1>Cart Is Empty</h1>
+	</div>
+
+<% } %>

@@ -1,0 +1,35 @@
+<% if (allrecs.length > 0) {%>
+    <table>
+        <tr>
+            <th>Vehicle ID</th>
+            <th>Product Image</th>
+            <th>Description</th>
+            <th>Duration</th>
+            <th>Vehicle Type</th>
+            <th>Daily Fee</th>
+            <th>Renter ID</th>
+            <th>Host ID</th>
+            <th>Review ID</th>
+            <th>Status</th>
+            <th>Featured</th>
+        </tr>
+      <% allrecs.forEach((recref, index) => { %>
+        <tr>
+            <td><%= recref.vehicle_id %></td>
+            <td><%= recref.prodimage %></td>
+            <td><%= recref.description %></td>
+            <td><%= recref.duration %></td>
+            <td><%= recref.vehicle_type %></td>
+            <td><%= recref.daily_fee %></td>
+            <td><%= recref.renter_id %></td>
+            <td><%= recref.host_id %></td>
+            <td><%= recref.review_id %></td>
+            <td><%= recref.status %></td>
+            <td><%= recref.featured %></td>
+          
+            </tr>
+    <% }); %>
+    </table>
+    <% } else { %>
+        <p>Not Records Available</p>
+    <% } %>

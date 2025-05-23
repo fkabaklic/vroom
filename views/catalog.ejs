@@ -1,0 +1,27 @@
+<div class="hero">
+  <div class="hero-content">
+        
+      <h2>Available Cars</h2>
+  </div>
+</div>
+
+<div class="car-grid">
+  
+    <% if (allrecs.length > 0) {%>
+        <% allrecs.forEach((recref, index) => { %>
+    
+      <form action="/catalog/add" method="post" >
+			<input type="hidden" name="vehicle_id" value=<%= recref.vehicle_id %> > 
+    
+    <div>
+        <p><img src="/images/<%= recref.prodimage %>"> </p>
+        <h3><%= recref.description %> </h3>
+        <p>$<%= recref.daily_fee %> / day</p>
+        <button class="btn">Continue</button>
+        <a href="/vehicle/<%= recref.vehicle_id %>/show">Details</a>
+
+   </div>
+      </form>
+
+        <% }); %>
+   <% } %>

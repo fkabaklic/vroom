@@ -1,0 +1,13 @@
+<h1> Edit Customer</h1>
+<form action="/promotion/save" method="post">
+   <input type="hidden" name="promotion_id" value="<%= onerec.promotion_id %>" >
+<table>
+	<tr> <td> Promotion Title </td> <td> <input type="text" name="name" value="<%= onerec.promotitle %>"required>  </td> </tr>
+	<tr> <td> Promo Image </td> <td> <input type="text" name="name" value="<%= onerec.promoimage %>"required>  </td> </tr>
+	<tr> <td> Description </td> <td><input type="text" name="description" value="<%= onerec.description%>"required>  </td> </tr>
+	<tr> <td> Start Date </td> <td> <input type="date" name="startdate" value="<%= onerec.startdate.toISOString().split('T')[0]%>" required>  </td> </tr>
+	<tr> <td> End Date</td> <td> <input type="date" name="enddate" value="<%= onerec.enddate.toISOString().split('T')[0] %>" required>  </td> </tr>
+	<tr> <td> Discount Rate </td> <td> <input type="text" name="discountrate" value="<%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format (onerec.discountrate) %>" required>  </td> </tr>
+</table>
+<button class="rec" type="submit">Save</button>
+</form>

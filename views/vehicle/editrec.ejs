@@ -1,0 +1,36 @@
+<h1> Edit Customer</h1>
+<form action="/vehicle/save" method="post">
+   <input type="hidden" name="vehicle_id" value="<%= onerec.vehicle_id %>" >
+<table>
+	<tr> <td> Product Image: </td> <td> <input type="text" name="prodimage" value="<%= onerec.prodimage %>"required>  </td> </tr>
+	<tr> <td> Description: </td> <td><input type="text" name="description" value="<%= onerec.description %>"required>  </td> </tr>
+	<tr> <td> Duration: </td> <td> <input type="text" name="duration" value="<%= onerec.duration %>" required>  </td> </tr>
+    
+	<tr> <td> Vehicle Type: </td> <td> <select name="vehicle_type" required>  
+		<option selected><%= onerec.vehicle_type %></option>
+			<option>Sedan</option>
+			<option>Sport Car</option>
+			<option>SUV</option>
+			<option>Electric(EV)</option>
+		</select> </td> </tr>
+
+	<tr> <td> Daily Fee: </td> <td> <input type="text" name="daily_fee" value="<%= onerec.daily_fee %>" required> </td> </tr>
+	<tr> <td> Renter ID: </td> <td> <input type="text" name="renter_id" value="<%= onerec.renter_id %>" required> </td> </tr>
+	<tr> <td> Host ID: </td> <td> <input type="text" name="host_id" value="<%= onerec.host_id %>" required> </td> </tr>
+	<tr> <td> Review ID: </td> <td> <input type="text" name="review_id" value="<%= onerec.review_id %>" required> </td> </tr>
+	<tr> <td> Status: </td> <td> <select name="status" required>
+					<option selected><%= onerec.status %></option>
+						<option>Available</Option>
+						<option>Reserved</option>
+					</select> </td> </tr>
+										
+	<tr> <td> Featured: </td> <td> 
+							<% if (onerec.featured){ %>
+								<input type ="checkbox" name="featured" checked >
+							<% } else { %>
+								<input type="checkbox" name="featured" >
+							<% } %>
+						</td> </tr>				
+</table>
+<button class="rec" type="submit">Save</button>
+</form>

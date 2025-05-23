@@ -1,0 +1,29 @@
+<% if (allrecs.length > 0) {%>
+    <table>
+        <tr>
+            <th>Host ID</th>
+            <th>Name</th>
+            <th>Vehicle Type</th>
+            <th>Status</th>
+            <th>Number of Vehicles</th>
+        </tr>
+      <% allrecs.forEach((recref, index) => { %>
+        <tr>
+            <td><%= recref.host_id %></td>
+            <td><%= recref.name %></td>
+            <td><%= recref.vehicle_type %></td>
+            <td><%= recref.status %></td>
+            <td><%= recref.num_vehicles %></td>
+            <td><button class="btn3"><a href='/host/<%= recref.host_id %>/show'> Details</a></button></td>
+            <td><button class="btn3"><a href='/host/<%= recref.host_id %>/edit'>Edit</a></button></td>
+            <td><button class="btn3"><a href='/host/<%= recref.host_id %>/delete' onclick="return confirm('Are you sure you want to delete this record?');">Delete</a></button></td>
+            </tr>
+    <% }); %>
+    </table>
+    <% } else { %>
+        <p>Not Records Available</p>
+    <% } %>
+
+    <div class="b">
+        <button class="btn2"><a href='/host/addrecord'><i class="fa-solid fa-plus"></i></a></button>
+        </div>

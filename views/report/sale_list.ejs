@@ -1,0 +1,31 @@
+<% if (allrecs.length > 0) {%>
+    <table>
+        <tr>
+            <th>Sale Order ID</th>
+            <th>Customer ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Sale Date</th>
+            <th>Vehicle ID</th>
+            <th>Vehicle Description</th>
+            <th>Duration</th>
+        </tr>
+      <% allrecs.forEach((recref, index) => { %>
+        <tr>
+            <td align="center"><%= recref.saleorder_id %></td>
+            <td align="center"><%= recref.customer_id %></td>
+            <td align="center"><%= recref.firstname %></td>
+            <td align="center"><%= recref.lastname %></td>
+            <td align="center"><%= recref.saledate.toLocaleDateString('en-US') %></td>
+            <td align="center"><%= recref.vehicle_id %></td>
+            <td align="center"><%= recref.description %></td>
+            <td align="center"><%= recref.duration %></td>
+            
+        </tr>
+    <% }); %>
+    </table>
+    <% } else { %>
+        <p>Not Records Available</p>
+    <% } %>
+
+

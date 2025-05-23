@@ -1,0 +1,13 @@
+<div class="car-grid">
+  
+    <% if (allrecs.length > 0) {%>
+        <% allrecs.forEach((recref, index) => { %>
+    
+    <div>
+        <p><img src="/images/<%= recref.prodimage %>"> </p>
+        <h3><%= recref.description %> </h3>
+        <p>$<%= recref.daily_fee %> / day</p>
+        <button class="btn">Learn More</button>
+   </div>
+        <% }); %>
+   <% } %>

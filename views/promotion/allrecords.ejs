@@ -1,0 +1,33 @@
+<% if (allrecs.length > 0) {%>
+    <table>
+        <tr>
+            <th>Promotion ID</th>
+            <th>Promo Title</th>
+            <th>Promo Image</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Discount Rate</th>
+        </tr>
+      <% allrecs.forEach((recref, index) => { %>
+        <tr>
+            <td align="center"><%= recref.promotion_id %></td>
+            <td align="center"><%= recref.promotitle %></td>
+            <td align="center"><%= recref.promoimage %></td>
+            <td align="center"><%= recref.description %></td>
+            <td align="center"><%= recref.startdate.toLocaleDateString('en-US') %></td>
+            <td align="center"><%= recref.enddate.toLocaleDateString('en-US') %></td>
+            <td align="center"><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format (recref.discountrate) %></td>
+            <td><button class="btn3"><a href='/promotion/<%= recref.promotion_id %>/show'> Details</a></button></td>
+            <td><button class="btn3"><a href='/promotion/<%= recref.promotion_id %>/edit'>Edit</a></button></td>
+            <td><button class="btn3"><a href='/promotion/<%= recref.promotion_id %>/delete' onclick="return confirm('Are you sure you want to delete this record?');">Delete</a></button></td>
+            </tr>
+    <% }); %>
+    </table>
+    <% } else { %>
+        <p>Not Records Available</p>
+    <% } %>
+
+<div class="b">
+<button class="btn2"><a href='/promotion/addrecord'><i class="fa-solid fa-plus"></i></a></button>
+</div>

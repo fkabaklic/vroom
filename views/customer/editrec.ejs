@@ -1,0 +1,15 @@
+<h1> Edit Customer</h1>
+<form action="/customer/save" method="post">
+   <input type="hidden" name="customer_id" value="<%= onerec.customer_id %>" >
+<table>
+	<tr> <td> First Name: </td> <td> <input type="text" name="firstname" value="<%= onerec.firstname %>"required>  </td> </tr>
+	<tr> <td> Last Name: </td> <td><input type="text" name="lastname" value="<%= onerec.lastname %>"required>  </td> </tr>
+	<tr> <td> Email: </td> <td> <input type="text" name="email" value="<%= onerec.email %>" required>  </td> </tr>
+    <tr> <td> Phone: </td> <td> <input type="text" name="phone" value="<%= onerec.phone %>" required>  </td> </tr>
+	<tr> <td> Address: </td> <td> <input type="text" name="address" value="<%= onerec.address %>" required> </td> </tr>
+	<tr> <td> City: </td> <td> <input type="text" name="city" value="<%= onerec.city %>" required> </td> </tr>
+	<tr> <td> State: </td> <td> <input type="text" name="state" value="<%= onerec.state %>" required> </td> </tr>
+	<tr> <td> Zip: </td> <td> <input type="text" name="zip" value="<%= onerec.zip %>" required> </td> </tr>
+</table>
+<button class="rec" type="submit">Save</button>
+</form>

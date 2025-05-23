@@ -1,0 +1,50 @@
+
+<nav>
+    <div class="logo">
+        <a href="/"><img src="/images/logo.png" width="150" height="30"></a>
+    </div>
+    
+    <div class="searchbar">
+        <p><form action="/search" method="get">
+            <input type="text" name="searchcriteria">
+            <input type="submit" value="Search"> 
+        </form></p>
+        </div>
+    
+
+        
+    <ul class="nav-links">
+
+        <li><a href="/">Home</a></li>
+        <li><a href="/catalog">Cars</a></li>
+        <li><a href="/catalog/cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
+        <li>
+            <% if(session.customer_id > 0) { %>
+                <b> Hello <%= session.custname %>!</b></br>
+                <a href='/customer/show'>Profile</a> <br>
+                <a href='/customer/logout'>Logout</a> 
+             <% } else { %>
+                <a href='/customer/login'><i class="fa-solid fa-user-large"></i></a> 
+             <% } %>	
+        </li>
+        
+       
+        <div class="dropdown">
+            <% if (session.admin) { %>
+            <button class="dropbtn">Admin
+              <i class="fa fa-caret-down"></i>
+        </button>
+            <div class="dropdown-content"> 
+                <a href="/customer">Customer</a></li>       
+                <a href="/vehicle">Vehicles</a>
+                <a href="/vehiclecat">Vehicle Category</a>
+                <a href="/host">Host</a>
+                <a href="/renter">Renter</a>
+                <a href="/saleorder">Sale Order</a>
+                <a href="/promotion">Promotion</a>
+                <a href="/report">Reports</a>
+            </div> 
+        </div>
+        <% } %>
+    </ul>
+</nav>

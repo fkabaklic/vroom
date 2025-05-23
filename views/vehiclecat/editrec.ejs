@@ -1,0 +1,32 @@
+<h1> Edit Customer</h1>
+<form action="/vehiclecat/save" method="post">
+   <input type="hidden" name="vehiclecat_id" value="<%= onerec.vehiclecat_id %>" >
+<table>
+	<tr> <td> Vehicle Make: </td> <td> <select name="vehicle_make" required>  
+		<option selected><%= onerec.vehicle_make %></option>
+			<option>Audi</option>
+			<option>BMW</option>
+			<option>Ford</option>
+			<option>Mercedes</option>
+		</select> </td> </tr>
+	<tr> <td> Vehicle Model: </td> <td><select name="vehicle_model" required> 
+		<option selected><%= onerec.vehicle_model %></option>
+			<option>3 Series</option>
+			<option>CLA</option>
+			<option>Mustang</option>
+			<option>3 Series</option>
+			<option>Model S</option>
+			<option>Model 3</option>
+			<option>Model X</option>
+		</select> </td> </tr>
+		
+	<tr> <td> Vehicle Type: </td> <td> <select name="vehicle_type" required>  
+		<option selected><%= onerec.vehicle_type %></option>
+			<option>Sedan</option>
+			<option>Sport Car</option>
+			<option>SUV</option>
+			<option>Electric(EV)</option>
+		</select> </td> </tr>
+</table>
+<button class="rec" type="submit">Save</button>
+</form>

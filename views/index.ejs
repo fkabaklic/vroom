@@ -1,17 +1,29 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <p>My first IT231 Web Application - Vroom</p>
-    <p>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-    </p>
-  </body>
+<div class="hero">
+    <div class="hero-content">
+          
+        <h2>Find the perfect car for any trip or local commute</h2>
+        <p></p>
+         <a href="/catalog" class="btn">Browse cars</a>
+    </div>
+</div>
+
+  <div class="header">
+    <h1>Featured Vehicles</h1> 
+  <div>
+
+  <div class="car-grid">
+  
+    <% if (allrecs.length > 0) {%>
+        <% allrecs.forEach((recref, index) => { %>
+    
+    <div>
+        <p><img src="/images/<%= recref.prodimage %>"> </p>
+        <h3><%= recref.description %> </h3>
+        <p>$<%= recref.daily_fee %> / day</p>
+        <button class="btn">Learn More</button>
+   </div>
+        <% }); %>
+   <% } %>
+
+</body>
 </html>
