@@ -71,6 +71,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Debug middleware to log all requests
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+});
+
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
@@ -94,13 +100,15 @@ app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
     database: db ? 'connected' : 'disconnected',
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
+    timestamp: new Date().toISOString()
   });
 });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   console.log('404 error for path:', req.path);
+  console.log('Request headers:', req.headers);
   next(createError(404));
 });
 
@@ -108,6 +116,8 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   console.error('Error:', err.message);
   console.error('Stack:', err.stack);
+  console.error('Request path:', req.path);
+  console.error('Request method:', req.method);
   
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -122,4 +132,5 @@ app.use(function(err, req, res, next) {
   });
 });
 
+// Export the Express app
 module.exports = app;
