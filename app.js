@@ -12,25 +12,30 @@ dotenv.config();
 
 // Database connection with better error handling
 let db;
-try {
-  db = mariadb.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    port: process.env.DB_PORT
-  });
+const connectDB = async () => {
+  try {
+    db = mariadb.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: process.env.DB_PORT
+    });
 
-  db.connect((err) => {
-    if (err) {
-      console.error("Database connection error:", err);
-    } else {
-      console.log("Connected to DB successfully");
-    }
-  });
-} catch (error) {
-  console.error("Failed to create database connection:", error);
-}
+    db.connect((err) => {
+      if (err) {
+        console.error("Database connection error:", err);
+      } else {
+        console.log("Connected to DB successfully");
+      }
+    });
+  } catch (error) {
+    console.error("Failed to create database connection:", error);
+  }
+};
+
+// Connect to database
+connectDB();
 
 global.db = db;
 
@@ -110,6 +115,11 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: process.env.NODE_ENV === 'development' ? err : {}
   });
+});
+
+// Add a health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
 });
 
 module.exports = app;
