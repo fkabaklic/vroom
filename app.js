@@ -77,39 +77,68 @@ app.use((req, res, next) => {
   next();
 });
 
+// Define routes directly in app.js for serverless environment
+app.get('/', (req, res) => {
+  if (!global.db) {
+    return res.status(500).render('error', {
+      message: 'Database connection error',
+      error: { status: 500 }
+    });
+  }
+
+  const query = "SELECT vehicle_id, prodimage, description, duration, vehicle_type, daily_fee, renter_id, host_id, review_id, status FROM vehicle WHERE featured = true";
+  
+  global.db.query(query, (err, result) => {
+    if (err) {
+      console.error('Database query error:', err);
+      return res.status(500).render('error', {
+        message: 'Error fetching featured vehicles',
+        error: { status: 500 }
+      });
+    }
+    res.render('index', {
+      title: 'Home',
+      allrecs: result || []
+    });
+  });
+});
+
+app.get('/about', (req, res) => {
+  res.render('about');
+});
+
+app.get('/contact', (req, res) => {
+  res.render('contact');
+});
+
+app.get('/privacy', (req, res) => {
+  res.render('privacy');
+});
+
+app.get('/help', (req, res) => {
+  res.render('help');
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
+  const routes = [];
+  app._router.stack.forEach(middleware => {
+    if (middleware.route) {
+      routes.push({
+        path: middleware.route.path,
+        methods: Object.keys(middleware.route.methods)
+      });
+    }
+  });
+
   res.status(200).json({
     status: 'ok',
     database: db ? 'connected' : 'disconnected',
     environment: process.env.NODE_ENV || 'development',
     timestamp: new Date().toISOString(),
-    routes: app._router.stack
-      .filter(r => r.route)
-      .map(r => ({
-        path: r.route.path,
-        methods: Object.keys(r.route.methods)
-      }))
+    routes: routes
   });
 });
-
-// Register routes directly
-app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
-app.use('/about', require('./routes/about'));
-app.use('/contact', require('./routes/contact'));
-app.use('/privacy', require('./routes/privacy'));
-app.use('/help', require('./routes/help'));
-app.use('/customer', require('./routes/customer'));
-app.use('/vehicle', require('./routes/vehicle'));
-app.use('/vehiclecat', require('./routes/vehiclecat'));
-app.use('/host', require('./routes/host'));
-app.use('/renter', require('./routes/renter'));
-app.use('/saleorder', require('./routes/saleorder'));
-app.use('/search', require('./routes/search'));
-app.use('/report', require('./routes/report'));
-app.use('/promotion', require('./routes/promotion'));
-app.use('/catalog', require('./routes/catalog'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
