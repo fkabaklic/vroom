@@ -11,7 +11,10 @@ router.get('/', function(req, res, next) {
 			console.log(err);
 			res.render('error');
 		} else {
-			res.render('search', {allrecs: result});
+			res.render('search', {
+				allrecs: result,
+				searchcriteria: req.query.searchcriteria
+			});
 		} 
 	});
 });

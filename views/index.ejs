@@ -1,29 +1,83 @@
-<div class="hero">
+<!-- Hero Section -->
+<section class="hero">
     <div class="hero-content">
-          
-        <h2>Find the perfect car for any trip or local commute</h2>
-        <p></p>
-         <a href="/catalog" class="btn">Browse cars</a>
+        <h1>Find the Perfect Car for Any Trip</h1>
+        <p>Choose from our wide selection of vehicles for your next adventure</p>
+        <a href="/catalog" class="btn btn-primary">
+            <i class="fas fa-car"></i> Browse Cars
+        </a>
     </div>
-</div>
+</section>
 
-  <div class="header">
-    <h1>Featured Vehicles</h1> 
-  <div>
+<!-- Featured Vehicles Section -->
+<section class="featured-vehicles">
+    <div class="section-header">
+        <h2>Featured Vehicles</h2>
+        <p>Our most popular and highly-rated vehicles</p>
+    </div>
 
-  <div class="car-grid">
-  
-    <% if (allrecs.length > 0) {%>
-        <% allrecs.forEach((recref, index) => { %>
-    
-    <div>
-        <p><img src="/images/<%= recref.prodimage %>"> </p>
-        <h3><%= recref.description %> </h3>
-        <p>$<%= recref.daily_fee %> / day</p>
-        <button class="btn">Learn More</button>
-   </div>
-        <% }); %>
-   <% } %>
+    <div class="vehicle-grid">
+        <% if (allrecs && allrecs.length > 0) { %>
+            <% allrecs.forEach((vehicle) => { %>
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="/images/<%= vehicle.prodimage %>" alt="<%= vehicle.description %>">
+                        <div class="vehicle-overlay">
+                            <span class="status-badge <%= vehicle.status.toLowerCase() %>">
+                                <i class="fas fa-circle"></i> <%= vehicle.status %>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="vehicle-details">
+                        <div class="vehicle-header">
+                            <h3><%= vehicle.description %></h3>
+                            <div class="vehicle-price">
+                                <span class="price-amount">$<%= vehicle.daily_fee %></span>
+                                <span class="price-period">/day</span>
+                            </div>
+                        </div>
+                        
+                        <div class="vehicle-badges">
+                            <span class="vehicle-type">
+                                <i class="fas fa-car"></i> <%= vehicle.vehicle_type %>
+                            </span>
+                            <span class="vehicle-location">
+                                <i class="fas fa-map-marker-alt"></i> Available Now
+                            </span>
+                        </div>
+                        
+                        <div class="vehicle-features">
+                            <div class="feature-item">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>Fuel Efficient</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Fully Insured</span>
+                            </div>
+                        </div>
+                        
+                        <div class="vehicle-actions">
+                            <a href="/vehicle/<%= vehicle.vehicle_id %>" class="btn btn-primary">
+                                <i class="fas fa-info-circle"></i> View Details
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div class="no-vehicles">
+                <i class="fas fa-car-side"></i>
+                <p>No featured vehicles available at the moment.</p>
+                <a href="/catalog" class="btn btn-primary">View All Vehicles</a>
+            </div>
+        <% } %>
+    </div>
+</section>
 
+
+
+<body>
 </body>
 </html>

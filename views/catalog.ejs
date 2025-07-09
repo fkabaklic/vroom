@@ -1,27 +1,79 @@
-<div class="hero">
-  <div class="hero-content">
-        
-      <h2>Available Cars</h2>
-  </div>
-</div>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Available Cars</h1>
+        <p>Browse our complete collection of vehicles</p>
+    </div>
+</section>
 
-<div class="car-grid">
-  
-    <% if (allrecs.length > 0) {%>
-        <% allrecs.forEach((recref, index) => { %>
+<!-- Catalog Section -->
+<section class="featured-vehicles">
+    <div class="section-header">
+        <h2>All Vehicles</h2>
+        <p>Choose from our complete fleet of vehicles</p>
+    </div>
     
-      <form action="/catalog/add" method="post" >
-			<input type="hidden" name="vehicle_id" value=<%= recref.vehicle_id %> > 
-    
-    <div>
-        <p><img src="/images/<%= recref.prodimage %>"> </p>
-        <h3><%= recref.description %> </h3>
-        <p>$<%= recref.daily_fee %> / day</p>
-        <button class="btn">Continue</button>
-        <a href="/vehicle/<%= recref.vehicle_id %>/show">Details</a>
-
-   </div>
-      </form>
-
-        <% }); %>
-   <% } %>
+    <div class="vehicle-grid">
+        <% if (allrecs && allrecs.length > 0) { %>
+            <% allrecs.forEach((vehicle) => { %>
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="/images/<%= vehicle.prodimage %>" alt="<%= vehicle.description %>">
+                        <div class="vehicle-overlay">
+                            <span class="status-badge <%= vehicle.status.toLowerCase() %>">
+                                <i class="fas fa-circle"></i> <%= vehicle.status %>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="vehicle-details">
+                        <div class="vehicle-header">
+                            <h3><%= vehicle.description %></h3>
+                            <div class="vehicle-price">
+                                <span class="price-amount">$<%= vehicle.daily_fee %></span>
+                                <span class="price-period">/day</span>
+                            </div>
+                        </div>
+                        
+                        <div class="vehicle-badges">
+                            <span class="vehicle-type">
+                                <i class="fas fa-car"></i> <%= vehicle.vehicle_type %>
+                            </span>
+                            <span class="vehicle-location">
+                                <i class="fas fa-map-marker-alt"></i> Available Now
+                            </span>
+                        </div>
+                        
+                        <div class="vehicle-features">
+                            <div class="feature-item">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>Fuel Efficient</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Fully Insured</span>
+                            </div>
+                        </div>
+                        
+                        <div class="vehicle-actions">
+                            <form action="/catalog/add" method="post" class="inline-form">
+                                <input type="hidden" name="vehicle_id" value="<%= vehicle.vehicle_id %>">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                                </button>
+                            </form>
+                            <a href="/vehicle/<%= vehicle.vehicle_id %>/show" class="btn btn-secondary">
+                                <i class="fas fa-info-circle"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div class="no-vehicles">
+                <i class="fas fa-car-side"></i>
+                <p>No vehicles available at the moment.</p>
+                <a href="/" class="btn btn-primary">Return Home</a>
+            </div>
+        <% } %>
+    </div>
+</section>

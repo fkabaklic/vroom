@@ -1,14 +1,78 @@
-<h1> Details </h1>
-<table>
- 	<tr> <td> Vehicle ID: </td> <td> <%= onerec.vehicle_id %> </td> </tr>
- 	<tr> <td> Product Image: </td> <td> <%= onerec.prodimage %> </td> </tr>
- 	<tr> <td> Description: </td> <td> <%= onerec.description %> </td> </tr>
- 	<tr> <td> Duration: </td> <td> <%= onerec.duration %> </td> </tr>
- 	<tr> <td> Vehicle Type: </td> <td> <%= onerec.vehicle_type %> </td> </tr>
- 	<tr> <td> Daily Fee: </td> <td> <%= onerec.daily_fee %> </td> </tr>
- 	<tr> <td> Renter ID </td> <td> <%= onerec.renter_id %> </td> </tr>
- 	<tr> <td> Host ID: </td> <td> <%= onerec.host_id %> </td> </tr>
-	<tr> <td> Review ID: </td> <td> <%= onerec.review_id %> </td> </tr>
-	<tr> <td> Status: </td> <td> <%= onerec.status %> </td> </tr>
-	<tr> <td> Featured: </td> <td> <%= onerec.featured %> </td> </tr>
-</table>
+<section class="vehicle-details">
+    <div class="vehicle-details-container">
+        <div class="vehicle-gallery">
+            <div class="main-image">
+                <img src="/images/<%= onerec.prodimage %>" alt="<%= onerec.description %>">
+            </div>
+        </div>
+
+        <div class="vehicle-info">
+            <div class="vehicle-header">
+                <h1><%= onerec.description %></h1>
+                <div class="vehicle-status">
+                    <span class="status-badge <%= onerec.status.toLowerCase() %>">
+                        <%= onerec.status %>
+                    </span>
+                    <% if (onerec.featured) { %>
+                        <span class="featured-badge">
+                            <i class="fas fa-star"></i> Featured
+                        </span>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="vehicle-price">
+                <span class="price">$<%= onerec.daily_fee %></span>
+                <span class="price-label">per day</span>
+            </div>
+
+            <div class="vehicle-specs">
+                <div class="spec-item">
+                    <i class="fas fa-car"></i>
+                    <div class="spec-content">
+                        <span class="spec-label">Vehicle Type</span>
+                        <span class="spec-value"><%= onerec.vehicle_type %></span>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <i class="fas fa-clock"></i>
+                    <div class="spec-content">
+                        <span class="spec-label">Duration</span>
+                        <span class="spec-value"><%= onerec.duration %></span>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <i class="fas fa-user"></i>
+                    <div class="spec-content">
+                        <span class="spec-label">Host ID</span>
+                        <span class="spec-value"><%= onerec.host_id %></span>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <i class="fas fa-id-card"></i>
+                    <div class="spec-content">
+                        <span class="spec-label">Vehicle ID</span>
+                        <span class="spec-value"><%= onerec.vehicle_id %></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vehicle-actions">
+                <form action="/catalog/add" method="post" class="booking-form">
+                    <input type="hidden" name="vehicle_id" value="<%= onerec.vehicle_id %>">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-calendar-check"></i>
+                        Book Now
+                    </button>
+                </form>
+                <a href="/catalog" class="btn btn-secondary btn-block">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Catalog
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

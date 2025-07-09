@@ -1,13 +1,90 @@
-<div class="car-grid">
-  
-    <% if (allrecs.length > 0) {%>
-        <% allrecs.forEach((recref, index) => { %>
-    
-    <div>
-        <p><img src="/images/<%= recref.prodimage %>"> </p>
-        <h3><%= recref.description %> </h3>
-        <p>$<%= recref.daily_fee %> / day</p>
-        <button class="btn">Learn More</button>
-   </div>
-        <% }); %>
-   <% } %>
+<!-- Search Results Section -->
+<section class="search-results">
+    <div class="section-header">
+        <h2>Search Results</h2>
+        <p>Found <%= allrecs.length %> vehicle<%= allrecs.length !== 1 ? 's' : '' %> matching your search</p>
+        <% if (locals.searchcriteria) { %>
+            <div class="search-term">
+                <i class="fas fa-search"></i>
+                <span>Searching for: "<%= searchcriteria %>"</span>
+                <a href="/catalog" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Clear Search
+                </a>
+            </div>
+        <% } %>
+    </div>
+
+    <div class="vehicle-grid">
+        <% if (allrecs && allrecs.length > 0) { %>
+            <% allrecs.forEach((vehicle) => { %>
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="/images/<%= vehicle.prodimage %>" alt="<%= vehicle.description %>">
+                        <div class="vehicle-overlay">
+                            <span class="status-badge <%= vehicle.status.toLowerCase() %>">
+                                <i class="fas fa-circle"></i> <%= vehicle.status %>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="vehicle-details">
+                        <div class="vehicle-header">
+                            <h3><%= vehicle.description %></h3>
+                            <div class="vehicle-price">
+                                <span class="price-amount">$<%= vehicle.daily_fee %></span>
+                                <span class="price-period">/day</span>
+                            </div>
+                        </div>
+                        
+                        <div class="vehicle-badges">
+                            <span class="vehicle-type">
+                                <i class="fas fa-car"></i> <%= vehicle.vehicle_type %>
+                            </span>
+                            <span class="vehicle-location">
+                                <i class="fas fa-map-marker-alt"></i> Available Now
+                            </span>
+                        </div>
+                        
+                        <div class="vehicle-features">
+                            <div class="feature-item">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>Fuel Efficient</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Fully Insured</span>
+                            </div>
+                        </div>
+                        
+                        <div class="vehicle-actions">
+                            <form action="/catalog/add" method="post" class="inline-form">
+                                <input type="hidden" name="vehicle_id" value="<%= vehicle.vehicle_id %>">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                                </button>
+                            </form>
+                            <a href="/vehicle/<%= vehicle.vehicle_id %>/show" class="btn btn-secondary">
+                                <i class="fas fa-info-circle"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div class="no-results">
+                <div class="no-results-content">
+                    <i class="fas fa-search"></i>
+                    <h3>No vehicles found</h3>
+                    <p>We couldn't find any vehicles matching "<%= locals.searchcriteria || 'your search' %>"</p>
+                    <div class="no-results-actions">
+                        <a href="/catalog" class="btn btn-primary">
+                            <i class="fas fa-car"></i> Browse All Vehicles
+                        </a>
+                        <a href="/" class="btn btn-secondary">
+                            <i class="fas fa-home"></i> Return Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</section>
