@@ -1,8 +1,57 @@
-<h1> Details </h1>
-<table>
- 	<tr> <td> Order ID: </td> <td> <%= onerec.saleorder_id %> </td> </tr>
- 	<tr> <td> Sale Date: </td> <td> <%= onerec.saledate %> </td> </tr>
- 	<tr> <td> Customer ID: </td> <td> <%= onerec.customer_id %> </td> </tr>
-	<tr> <td> Vehicle ID: </td> <td> <%= onerec.vehicle_id %> </td> </tr>
-	<tr> <td> Sale Price</td> <td> <%= onerec.saleprice %> </td> </tr>
-</table>
+<!-- Sale Order Details Section -->
+<section class="details-section">
+    <div class="details-container">
+        <div class="details-header">
+            <h1><i class="fas fa-file-invoice"></i> Sale Order Details</h1>
+            <p>View order information and transaction details</p>
+        </div>
+
+        <div class="details-card">
+            <div class="details-grid">
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-hashtag"></i> Order ID
+                    </label>
+                    <span class="detail-value"><%= onerec.saleorder_id %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-calendar"></i> Sale Date
+                    </label>
+                    <span class="detail-value"><%= onerec.saledate %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-user"></i> Customer ID
+                    </label>
+                    <span class="detail-value"><%= onerec.customer_id %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-car"></i> Vehicle ID
+                    </label>
+                    <span class="detail-value"><%= onerec.vehicle_id %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-dollar-sign"></i> Sale Price
+                    </label>
+                    <span class="detail-value price-value">$<%= onerec.saleprice %></span>
+                </div>
+            </div>
+
+            <div class="details-actions">
+                <a href="/saleorder/edit" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Edit Order
+                </a>
+                <a href="/saleorder" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

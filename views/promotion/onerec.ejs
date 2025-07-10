@@ -1,9 +1,61 @@
-<h1> Details </h1>
-<table>
- 	<tr> <td> Promo Title </td> <td> <%= onerec.promotitle %> </td> </tr>
- 	<tr> <td> Promo Image</td> <td> <%= onerec.promoimage %> </td> </tr>
- 	<tr> <td> Description </td> <td> <%= onerec.description %> </td> </tr>
- 	<tr> <td> Start Date </td> <td> <%= onerec.startdate.toLocaleDateString('en-US') %> </td> </tr>
- 	<tr> <td> End Date </td> <td> <%= onerec.enddate.toLocaleDateString('en-US') %> </td> </tr>
- 	<tr> <td> Discount Rate </td> <td> <%= onerec.discountrate %> </td> </tr>
-</table>
+<!-- Promotion Details Section -->
+<section class="details-section">
+    <div class="details-container">
+        <div class="details-header">
+            <h1><i class="fas fa-percent"></i> Promotion Details</h1>
+            <p>View promotion information and manage campaign</p>
+        </div>
+
+        <div class="details-card">
+            <div class="promotion-image">
+                <img src="/images/<%= onerec.promoimage %>" alt="<%= onerec.promotitle %>">
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-group full-width">
+                    <label>
+                        <i class="fas fa-tag"></i> Promo Title
+                    </label>
+                    <span class="detail-value"><%= onerec.promotitle %></span>
+                </div>
+
+                <div class="detail-group full-width">
+                    <label>
+                        <i class="fas fa-info-circle"></i> Description
+                    </label>
+                    <span class="detail-value"><%= onerec.description %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-calendar-plus"></i> Start Date
+                    </label>
+                    <span class="detail-value"><%= onerec.startdate.toLocaleDateString('en-US') %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-calendar-minus"></i> End Date
+                    </label>
+                    <span class="detail-value"><%= onerec.enddate.toLocaleDateString('en-US') %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-percentage"></i> Discount Rate
+                    </label>
+                    <span class="detail-value discount-value"><%= onerec.discountrate %>%</span>
+                </div>
+            </div>
+
+            <div class="details-actions">
+                <a href="/promotion/edit" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Edit Promotion
+                </a>
+                <a href="/promotion" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,7 +1,50 @@
-<h1> Details </h1>
-<table>
- 	<tr> <td> Vehicle Category ID: </td> <td> <%= onerec.vehiclecat_id %> </td> </tr>
- 	<tr> <td> Vehicle Make: </td> <td> <%= onerec.vehicle_make %> </td> </tr>
- 	<tr> <td> Vehicle Model: </td> <td> <%= onerec.vehicle_model %> </td> </tr>
- 	<tr> <td> Vehicle Type: </td> <td> <%= onerec.vehicle_type %> </td> </tr>
-</table>
+<!-- Vehicle Category Details Section -->
+<section class="details-section">
+    <div class="details-container">
+        <div class="details-header">
+            <h1><i class="fas fa-tags"></i> Vehicle Category Details</h1>
+            <p>View category information and manage vehicle types</p>
+        </div>
+
+        <div class="details-card">
+            <div class="details-grid">
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-hashtag"></i> Vehicle Category ID
+                    </label>
+                    <span class="detail-value"><%= onerec.vehiclecat_id %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-car"></i> Vehicle Make
+                    </label>
+                    <span class="detail-value"><%= onerec.vehicle_make %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-car-side"></i> Vehicle Model
+                    </label>
+                    <span class="detail-value"><%= onerec.vehicle_model %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-tag"></i> Vehicle Type
+                    </label>
+                    <span class="detail-value"><%= onerec.vehicle_type %></span>
+                </div>
+            </div>
+
+            <div class="details-actions">
+                <a href="/vehiclecat/edit" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Edit Category
+                </a>
+                <a href="/vehiclecat" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,17 +1,88 @@
-<h1> Details </h1>
-<table>
- 	<tr> <td> Customer ID: </td> <td> <%= onerec.customer_id %> </td> </tr>
- 	<tr> <td> First Name: </td> <td> <%= onerec.firstname %> </td> </tr>
- 	<tr> <td> Last Name: </td> <td> <%= onerec.lastname %> </td> </tr>
- 	<tr> <td> Email: </td> <td> <%= onerec.email %> </td> </tr>
- 	<tr> <td> Phone: </td> <td> <%= onerec.phone %> </td> </tr>
- 	<tr> <td> Address: </td> <td> <%= onerec.address %> </td> </tr>
- 	<tr> <td> City: </td> <td> <%= onerec.city %> </td> </tr>
- 	<tr> <td> State </td> <td> <%= onerec.state %> </td> </tr>
- 	<tr> <td> Zip: </td> <td> <%= onerec.zip %> </td> </tr>
-	 <tr> <td> state: </td> <td> <%= onerec.state %> </td> </tr>
- 
-</table>
+<!-- Customer Details Section -->
+<section class="details-section">
+    <div class="details-container">
+        <div class="details-header">
+            <h1><i class="fas fa-user"></i> Customer Details</h1>
+            <p>View customer information and manage profile</p>
+        </div>
 
-<button class="btn3"><a href="/customer/edit">Profile</a></button>
-<button class="btn3"><a href="/customer/password">Password</a></button>
+        <div class="details-card">
+            <div class="details-grid">
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-hashtag"></i> Customer ID
+                    </label>
+                    <span class="detail-value"><%= onerec.customer_id %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-user"></i> First Name
+                    </label>
+                    <span class="detail-value"><%= onerec.firstname %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-user"></i> Last Name
+                    </label>
+                    <span class="detail-value"><%= onerec.lastname %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <span class="detail-value"><%= onerec.email %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-phone"></i> Phone Number
+                    </label>
+                    <span class="detail-value"><%= onerec.phone %></span>
+                </div>
+
+                <div class="detail-group full-width">
+                    <label>
+                        <i class="fas fa-map-marker-alt"></i> Address
+                    </label>
+                    <span class="detail-value"><%= onerec.address %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-city"></i> City
+                    </label>
+                    <span class="detail-value"><%= onerec.city %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-map"></i> State
+                    </label>
+                    <span class="detail-value"><%= onerec.state %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-mail-bulk"></i> ZIP Code
+                    </label>
+                    <span class="detail-value"><%= onerec.zip %></span>
+                </div>
+            </div>
+
+            <div class="details-actions">
+                <a href="/customer/edit" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Edit Profile
+                </a>
+                <a href="/customer/password" class="btn btn-secondary">
+                    <i class="fas fa-lock"></i> Change Password
+                </a>
+                <a href="/customer" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,8 +1,59 @@
-<h1> Details </h1>
-<table>
- 	<tr> <td> Host ID: </td> <td> <%= onerec.host_id %> </td> </tr>
- 	<tr> <td> Name: </td> <td> <%= onerec.name %> </td> </tr>
- 	<tr> <td> Vehicle Type: </td> <td> <%= onerec.vehicle_type %> </td> </tr>
- 	<tr> <td> status: </td> <td> <%= onerec.status %> </td> </tr>
- 	<tr> <td> Number of Vehicle: </td> <td> <%= onerec.num_vehicle %> </td> </tr>
-</table>
+<!-- Host Details Section -->
+<section class="details-section">
+    <div class="details-container">
+        <div class="details-header">
+            <h1><i class="fas fa-user-tie"></i> Host Details</h1>
+            <p>View host information and manage profile</p>
+        </div>
+
+        <div class="details-card">
+            <div class="details-grid">
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-hashtag"></i> Host ID
+                    </label>
+                    <span class="detail-value"><%= onerec.host_id %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-user"></i> Name
+                    </label>
+                    <span class="detail-value"><%= onerec.name %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-car-side"></i> Vehicle Type
+                    </label>
+                    <span class="detail-value"><%= onerec.vehicle_type %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-toggle-on"></i> Status
+                    </label>
+                    <span class="detail-value status-value <%= onerec.status.toLowerCase() %>">
+                        <i class="fas fa-circle"></i> <%= onerec.status %>
+                    </span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-cars"></i> Number of Vehicles
+                    </label>
+                    <span class="detail-value"><%= onerec.num_vehicle %></span>
+                </div>
+            </div>
+
+            <div class="details-actions">
+                <a href="/host/edit" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Edit Host
+                </a>
+                <a href="/host" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,15 +1,72 @@
-<h1> New Record</h1>
-<form action="/promotion" method="post">
-<table>
-	<tr> <td> Promotion ID </td> <td> <input type="text" name="promotion_id" required> </td> </tr>
-	<tr> <td> Promo Title </td> <td> <input type="text" name="promotitle" required>  </td> </tr>
-	<tr> <td> Promo Image </td> <td> <input type="text" name="promoimage" required>  </td> </tr>
-	<tr> <td> Description </td> <td><input type="text" name="description" required>  </td> </tr>
-	<tr> <td> Start Date </td> <td> <input type="date" name="startdate" required>  </td> </tr>
-	<tr> <td> End Date </td> <td> <input type="date" name="enddate" required>  </td> </tr>
-	<tr> <td> Discount Rate </td> <td> <input type="text" name="discountrate" required>  </td> </tr>
+<!-- Add Promotion Record Section -->
+<section class="form-section">
+    <div class="form-container">
+        <div class="form-header">
+            <h1><i class="fas fa-percent"></i> Add New Promotion</h1>
+            <p>Enter the promotion information below</p>
+        </div>
 
-</table>
-<button class="rec" type="submit">Save</button>
-</form>
+        <form action="/promotion" method="post" class="modern-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="promotion_id">
+                        <i class="fas fa-hashtag"></i> Promotion ID
+                    </label>
+                    <input type="text" id="promotion_id" name="promotion_id" required placeholder="Enter promotion ID">
+                </div>
+
+                <div class="form-group">
+                    <label for="promotitle">
+                        <i class="fas fa-tag"></i> Promo Title
+                    </label>
+                    <input type="text" id="promotitle" name="promotitle" required placeholder="Enter promotion title">
+                </div>
+
+                <div class="form-group">
+                    <label for="promoimage">
+                        <i class="fas fa-image"></i> Promo Image
+                    </label>
+                    <input type="text" id="promoimage" name="promoimage" required placeholder="Enter image filename">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="description">
+                        <i class="fas fa-info-circle"></i> Description
+                    </label>
+                    <textarea id="description" name="description" required placeholder="Enter promotion description" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="startdate">
+                        <i class="fas fa-calendar-plus"></i> Start Date
+                    </label>
+                    <input type="date" id="startdate" name="startdate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="enddate">
+                        <i class="fas fa-calendar-minus"></i> End Date
+                    </label>
+                    <input type="date" id="enddate" name="enddate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="discountrate">
+                        <i class="fas fa-percentage"></i> Discount Rate
+                    </label>
+                    <input type="number" id="discountrate" name="discountrate" required placeholder="Enter discount percentage" min="0" max="100" step="0.01">
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Promotion
+                </button>
+                <a href="/promotion" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
 

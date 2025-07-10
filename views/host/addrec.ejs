@@ -1,12 +1,72 @@
-<h1> New Record</h1>
-<form action="/host" method="post">
-<table>
-	<tr> <td> Vehicle ID: </td> <td> <input type="text" name="vehicle_id" required> </td> </tr>
-	<tr> <td> Name: </td> <td> <input type="text" name="name" required>  </td> </tr>
-	<tr> <td> Vehicle Type: </td> <td><input type="text" name="vehicle_type" required>  </td> </tr>
-	<tr> <td> Status: </td> <td> <input type="text" name="status" required>  </td> </tr>
-	<tr> <td> Number of Vehicle: </td> <td> <input type="text" name="num_vehicles" required> </td> </tr>
-</table>
-<button class="rec" type="submit">Save</button>
-</form>
+<!-- Add Host Record Section -->
+<section class="form-section">
+    <div class="form-container">
+        <div class="form-header">
+            <h1><i class="fas fa-user-tie"></i> Add New Host</h1>
+            <p>Enter the host information below</p>
+        </div>
+
+        <form action="/host" method="post" class="modern-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="vehicle_id">
+                        <i class="fas fa-hashtag"></i> Vehicle ID
+                    </label>
+                    <input type="text" id="vehicle_id" name="vehicle_id" required placeholder="Enter vehicle ID">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">
+                        <i class="fas fa-user"></i> Name
+                    </label>
+                    <input type="text" id="name" name="name" required placeholder="Enter host name">
+                </div>
+
+                <div class="form-group">
+                    <label for="vehicle_type">
+                        <i class="fas fa-car-side"></i> Vehicle Type
+                    </label>
+                    <select id="vehicle_type" name="vehicle_type" required>
+                        <option value="" disabled selected>Select vehicle type</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Truck">Truck</option>
+                        <option value="Sports Car">Sports Car</option>
+                        <option value="Luxury">Luxury</option>
+                        <option value="Electric">Electric</option>
+                        <option value="Hybrid">Hybrid</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">
+                        <i class="fas fa-toggle-on"></i> Status
+                    </label>
+                    <select id="status" name="status" required>
+                        <option value="" disabled selected>Select status</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="num_vehicles">
+                        <i class="fas fa-cars"></i> Number of Vehicles
+                    </label>
+                    <input type="number" id="num_vehicles" name="num_vehicles" required placeholder="Enter number of vehicles" min="1">
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Host
+                </button>
+                <a href="/host" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
 

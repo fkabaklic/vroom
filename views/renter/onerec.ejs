@@ -1,8 +1,59 @@
-<h1> Details </h1>
-<table>
- 	<tr> <td> Renter ID: </td> <td> <%= onerec.renter_id %> </td> </tr>
- 	<tr> <td> Name: </td> <td> <%= onerec.name %> </td> </tr>
- 	<tr> <td> Vehicle Type: </td> <td> <%= onerec.vehicle_type %> </td> </tr>
- 	<tr> <td> status: </td> <td> <%= onerec.status %> </td> </tr>
- 	<tr> <td> Number of Vehicle: </td> <td> <%= onerec.num_vehicle %> </td> </tr>
-</table>
+<!-- Renter Details Section -->
+<section class="details-section">
+    <div class="details-container">
+        <div class="details-header">
+            <h1><i class="fas fa-user"></i> Renter Details</h1>
+            <p>View renter information and manage profile</p>
+        </div>
+
+        <div class="details-card">
+            <div class="details-grid">
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-hashtag"></i> Renter ID
+                    </label>
+                    <span class="detail-value"><%= onerec.renter_id %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-user"></i> Name
+                    </label>
+                    <span class="detail-value"><%= onerec.name %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-car-side"></i> Vehicle Type
+                    </label>
+                    <span class="detail-value"><%= onerec.vehicle_type %></span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-toggle-on"></i> Status
+                    </label>
+                    <span class="detail-value status-value <%= onerec.status.toLowerCase() %>">
+                        <i class="fas fa-circle"></i> <%= onerec.status %>
+                    </span>
+                </div>
+
+                <div class="detail-group">
+                    <label>
+                        <i class="fas fa-cars"></i> Number of Vehicles
+                    </label>
+                    <span class="detail-value"><%= onerec.num_vehicle %></span>
+                </div>
+            </div>
+
+            <div class="details-actions">
+                <a href="/renter/edit" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Edit Renter
+                </a>
+                <a href="/renter" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

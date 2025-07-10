@@ -8,18 +8,45 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileMenuBtn.addEventListener('click', function() {
             navMenu.classList.toggle('active');
             this.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close menu when clicking on a link
+        const navLinks = navMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (navMenu && navMenu.classList.contains('active') && 
+                !event.target.closest('.nav-menu') && 
+                !event.target.closest('.mobile-menu-btn')) {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     }
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (navMenu && navMenu.classList.contains('active') && 
-            !event.target.closest('.nav-menu') && 
-            !event.target.closest('.mobile-menu-btn')) {
-            navMenu.classList.remove('active');
-            mobileMenuBtn.classList.remove('active');
-        }
-    });
 
     // Add smooth scrolling to all links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
