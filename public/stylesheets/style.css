@@ -1,10 +1,9 @@
-/* Google font Inter - Modern, clean typography */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Color Scheme - 10 Root Variables */
 :root {
   --color-primary: #1a1a1a;      /* Dark gray - Primary text, headings */
   --color-secondary: #6b7280;    /* Medium gray - Secondary text */
+  --color-text-secondary: #6b7280; /* Secondary text color */
   --color-accent: #f3f4f6;       /* Light gray - Borders, backgrounds */
   --color-surface: #ffffff;       /* White - Card backgrounds */
   --color-neutral: #9ca3af;      /* Neutral gray - Icons, subtle elements */
@@ -16,7 +15,6 @@
   --color-badge: #ffc107;         /* Yellow - Badge background */
 }
 
-/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -24,7 +22,7 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', Roboto, sans-serif;
   line-height: 1.6;
   color: var(--color-primary);
   background-color: var(--color-surface);
@@ -32,9 +30,8 @@ body {
 }
 
 .container {
-  
   margin: 0 auto;
-
+  
 }
 
 
@@ -59,16 +56,7 @@ p {
   line-height: 1.6;
 }
 
-/* Nav */
-
-nav {
-  height: 80px;
-  background-color: var(--color-surface);
-  border-bottom: 1px solid var(--color-accent);
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-}
+/* Navigation */
 
 .nav-links {
   display: flex;
@@ -104,7 +92,9 @@ a {
 
 /* Buttons */
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 12px 20px;
   border-radius: 8px;
   text-decoration: none;
@@ -124,6 +114,7 @@ a {
 
 .btn-primary:hover {
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn-secondary {
@@ -221,7 +212,6 @@ a {
 
 .vehicle-card:hover {
   transform: translateY(-1px);
-  /* box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04); */
   border-color: var(--color-neutral);
 }
 
@@ -327,8 +317,6 @@ a {
   color: var(--color-neutral);
   font-size: 0.875rem;
 }
-
-/* Vehicle price is now handled in vehicle-header */
 
 .vehicle-features {
   display: flex;
@@ -454,7 +442,6 @@ a {
   to { transform: rotate(360deg); }
 }
 
-/* Enhanced card interactions */
 .vehicle-card {
   cursor: pointer;
 }
@@ -481,7 +468,6 @@ a {
   min-width: 0;
 }
 
-/* Ensure forms don't interfere with card clicks */
 .vehicle-card form {
   position: relative;
   z-index: 3;
@@ -927,29 +913,17 @@ a {
 }
 
 @media (max-width: 480px) {
-  .details-header h1 {
-    font-size: 1.75rem;
-  }
-  
-  .details-card {
-    padding: 20px;
-  }
-  
-  .detail-value {
-    padding: 10px 12px;
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 480px) {
+  .details-header h1,
   .form-header h1 {
     font-size: 1.75rem;
   }
   
+  .details-card,
   .modern-form {
     padding: 20px;
   }
   
+  .detail-value,
   .form-group input,
   .form-group select,
   .form-group textarea {
@@ -1029,7 +1003,7 @@ a {
   min-width: 160px;
 }
 
-/* Hover effects for feature items */
+/* Feature Item Hover Effects */
 .feature-item:hover {
   color: var(--color-primary);
 }
@@ -1037,7 +1011,6 @@ a {
 .feature-item:hover i {
   color: var(--color-success);
   transform: scale(1.1);
-  transition: all 0.2s ease;
 }
 
 .vehicle-details-container {
@@ -1090,13 +1063,11 @@ a {
   border-radius: 10px;
   font-size: 0.9rem;
   font-weight: 500;
-  
 }
 
 .status-badge.available {
   background-color: var(--color-success);
   color: white;
-  align-content: center;
 }
 
 .status-badge.unavailable {
