@@ -4,87 +4,149 @@
     <div class="cart-container">
         <% if (cartitems != '0') { %>
             <div class="cart-header">
-                <h1>Your Cart</h1>
-                <p><%= cartitems.length %> item<%= cartitems.length > 1 ? 's' : '' %> in your cart</p>
+                <div class="cart-header-content">
+                    <h1><i class="fas fa-shopping-cart"></i> Your Cart</h1>
+                    <p class="cart-subtitle"><%= cartitems.length %> item<%= cartitems.length > 1 ? 's' : '' %> in your cart</p>
+                </div>
+                <div class="cart-header-actions">
+                    <a href="/catalog" class="btn btn-outline">
+                        <i class="fas fa-arrow-left"></i>
+                        Continue Shopping
+                    </a>
+                </div>
             </div>
 
-            <div class="cart-items">
-                <% cartitems.forEach((item, index) => { 
-                    var lineitemcost = item.daily_fee * item.duration;
-                    totprice = totprice + lineitemcost;
-                %>
-                    <div class="cart-item">
-                        <div class="item-image">
-                            <img src="/images/<%= item.prodimage %>" alt="<%= item.description %>">
+            <div class="cart-content">
+                <div class="cart-items-container">
+                    <div class="cart-items-header">
+                        <h3>Cart Items</h3>
+                        <span class="item-count"><%= cartitems.length %> item<%= cartitems.length > 1 ? 's' : '' %></span>
+                    </div>
+                    
+                    <div class="cart-items">
+                        <% cartitems.forEach((item, index) => { 
+                            var lineitemcost = item.daily_fee * item.duration;
+                            totprice = totprice + lineitemcost;
+                        %>
+                            <div class="cart-item">
+                                <div class="item-image">
+                                    <img src="/images/<%= item.prodimage %>" alt="<%= item.description %>">
+                                    <div class="item-badge">
+                                        <i class="fas fa-car"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="item-details">
+                                    <div class="item-header">
+                                        <h3><%= item.description %></h3>
+                                        <div class="item-price-mobile">
+                                            <span class="price">
+                                                <%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(lineitemcost) %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="item-specs">
+                                        <div class="spec-item">
+                                            <i class="fas fa-clock"></i>
+                                            <span><%= item.duration %> days</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <i class="fas fa-tag"></i>
+                                            <span><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.daily_fee) %>/day</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            <span>Rental Period</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="item-actions">
+                                        <form action="/catalog/remove" method="post" class="remove-form">
+                                            <input type="hidden" name="vehicle_id" value="<%= item.vehicle_id %>">
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-trash"></i>
+                                                Remove
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="item-price">
+                                    <div class="price-breakdown">
+                                        <div class="price-row">
+                                            <span class="price-label">Daily Rate:</span>
+                                            <span class="price-value"><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.daily_fee) %></span>
+                                        </div>
+                                        <div class="price-row">
+                                            <span class="price-label">Duration:</span>
+                                            <span class="price-value"><%= item.duration %> days</span>
+                                        </div>
+                                        <div class="price-row total">
+                                            <span class="price-label">Total:</span>
+                                            <span class="price-value"><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(lineitemcost) %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                </div>
+
+                <div class="cart-sidebar">
+                    <div class="cart-summary">
+                        <div class="summary-header">
+                            <h3><i class="fas fa-receipt"></i> Order Summary</h3>
                         </div>
                         
-                        <div class="item-details">
-                            <h3><%= item.description %></h3>
-                            <div class="item-specs">
-                                <span class="spec">
-                                    <i class="fas fa-clock"></i>
-                                    <%= item.duration %> days
-                                </span>
-                                <span class="spec">
-                                    <i class="fas fa-tag"></i>
-                                    <%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.daily_fee) %>/day
-                                </span>
+                        <div class="summary-content">
+                            <div class="summary-row">
+                                <span class="summary-label">Subtotal</span>
+                                <span class="summary-value"><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totprice) %></span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-label">Tax (8%)</span>
+                                <span class="summary-value"><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totprice * 0.08) %></span>
+                            </div>
+                            <div class="summary-divider"></div>
+                            <div class="summary-row total">
+                                <span class="summary-label">Total</span>
+                                <span class="summary-value"><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totprice * 1.08) %></span>
                             </div>
                         </div>
 
-                        <div class="item-price">
-                            <span class="price">
-                                <%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(lineitemcost) %>
-                            </span>
-                        </div>
-
-                        <div class="item-actions">
-                            <form action="/catalog/remove" method="post" class="remove-form">
-                                <input type="hidden" name="vehicle_id" value="<%= item.vehicle_id %>">
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fas fa-trash"></i>
-                                    Remove
-                                </button>
-                            </form>
+                        <div class="summary-actions">
+                            <a href="/catalog/checkout" class="btn btn-primary btn-full">
+                                <i class="fas fa-lock"></i>
+                                Proceed to Checkout
+                            </a>
+                            <div class="secure-checkout">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Secure Checkout</span>
+                            </div>
                         </div>
                     </div>
-                <% }); %>
-            </div>
-
-            <div class="cart-summary">
-                <div class="summary-row">
-                    <span>Subtotal</span>
-                    <span><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totprice) %></span>
                 </div>
-                <div class="summary-row">
-                    <span>Tax (8%)</span>
-                    <span><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totprice * 0.08) %></span>
-                </div>
-                <div class="summary-row total">
-                    <span>Total</span>
-                    <span><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totprice * 1.08) %></span>
-                </div>
-            </div>
-
-            <div class="cart-actions">
-                <a href="/catalog" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i>
-                    Continue Shopping
-                </a>
-                <a href="/catalog/checkout" class="btn btn-primary">
-                    <i class="fas fa-lock"></i>
-                    Proceed to Checkout
-                </a>
             </div>
         <% } else { %>
             <div class="empty-cart">
-                <i class="fas fa-shopping-cart"></i>
-                <h2>Your Cart is Empty</h2>
-                <p>Looks like you haven't added any vehicles to your cart yet.</p>
-                <a href="/catalog" class="btn btn-primary">
-                    <i class="fas fa-car"></i>
-                    Browse Vehicles
-                </a>
+                <div class="empty-cart-content">
+                    <div class="empty-cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h2>Your Cart is Empty</h2>
+                    <p>Looks like you haven't added any vehicles to your cart yet. Start exploring our selection of premium vehicles!</p>
+                    <div class="empty-cart-actions">
+                        <a href="/catalog" class="btn btn-primary">
+                            <i class="fas fa-car"></i>
+                            Browse Vehicles
+                        </a>
+                        <a href="/" class="btn btn-outline">
+                            <i class="fas fa-home"></i>
+                            Go Home
+                        </a>
+                    </div>
+                </div>
             </div>
         <% } %>
     </div>
