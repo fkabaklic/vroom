@@ -52,6 +52,8 @@ global.db = db;
 
 var app = express();
 
+app.set('trust proxy', 1);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -59,10 +61,13 @@ app.use(layouts);
 
 // Session configuration
 app.use(session({
-  secret: 'vroomAppSecret',
+  secret: process.env.SESSION_SECRET || 'vroomAppSecret',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: process.env.NODE_ENV === 'production' }
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax'
+  }
 }));
 
 app.use(function(req,res,next){

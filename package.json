@@ -10,7 +10,7 @@
     "build:css": "tailwindcss -i ./src/input.css -o ./public/stylesheets/tailwind.css --minify",
     "watch:css": "tailwindcss -i ./src/input.css -o ./public/stylesheets/tailwind.css --watch",
     "build": "npm install && npm run build:css",
-    "vercel-build": "npm install && npm run build:css"
+    "vercel-build": "npm install --include=dev && npm run build:css"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
