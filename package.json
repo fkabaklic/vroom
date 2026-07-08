@@ -23,14 +23,12 @@
     "express-session": "^1.18.0",
     "http-errors": "~1.6.3",
     "mariadb": "^3.3.0",
-    "morgan": "^1.11.0"
+    "morgan": "^1.11.0",
+    "@tailwindcss/cli": "^4.3.2",
+    "tailwindcss": "^4.3.2"
   },
   "engines": {
     "node": "22.x"
   },
-  "type": "commonjs",
-  "devDependencies": {
-    "@tailwindcss/cli": "^4.3.2",
-    "tailwindcss": "^4.3.2"
-  }
+  "type": "commonjs"
 }

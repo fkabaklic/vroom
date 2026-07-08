@@ -130,13 +130,7 @@ app.get('/health', (req, res) => {
     status: 'ok',
     database: db ? 'connected' : 'disconnected',
     environment: process.env.NODE_ENV || 'development',
-    timestamp: new Date().toISOString(),
-    routes: app._router.stack
-      .filter(r => r.route)
-      .map(r => ({
-        path: r.route.path,
-        methods: Object.keys(r.route.methods)
-      }))
+    timestamp: new Date().toISOString()
   });
 });
 
@@ -153,17 +147,22 @@ app.use(function(err, req, res, next) {
   console.error('Stack:', err.stack);
   console.error('Request path:', req.path);
   console.error('Request method:', req.method);
-  
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
+  const status = err.status || 500;
+
+  res.status(status);
   res.render('error', {
     title: 'Error',
     message: err.message,
-    error: process.env.NODE_ENV === 'development' ? err : {}
+    error: { status: status }
+  }, function(renderErr) {
+    if (renderErr) {
+      console.error('Error page render failed:', renderErr.message);
+      res.status(status).json({
+        error: err.message || 'Internal Server Error',
+        status: status
+      });
+    }
   });
 });
 
