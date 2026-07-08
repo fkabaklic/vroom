@@ -1,83 +1,45 @@
-<!-- Hero Section -->
-<section class="hero">
-    <div class="hero-content">
-        <h1>Find the Perfect Car for Any Trip</h1>
-        <p>Choose from our wide selection of vehicles for your next adventure</p>
-        <a href="/catalog" class="btn btn-primary">
-            <i class="fas fa-car"></i> Browse Cars
+<section class="relative overflow-hidden bg-vroom-brand text-white">
+  <div class="absolute inset-0">
+    <img src="/images/vroom_hero_2.jpg" alt="" class="h-full w-full object-cover opacity-40">
+    <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/70 to-slate-900/30"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+    <div class="max-w-2xl">
+      <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-blue-300">Premium car rentals</p>
+      <h1 class="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">Find the Perfect Car for Any Trip</h1>
+      <p class="mt-5 max-w-xl text-lg leading-relaxed text-slate-200">
+        Choose from our curated fleet of luxury, electric, and sports vehicles for your next adventure.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/catalog" class="btn-primary bg-white text-vroom-brand hover:bg-slate-100">
+          <i class="fas fa-car"></i> Browse Cars
         </a>
+        <a href="/customer/register" class="btn-secondary border-white/20 bg-white/10 text-white hover:bg-white/20">
+          <i class="fas fa-user-plus"></i> Get Started
+        </a>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- Featured Vehicles Section -->
-<section class="featured-vehicles">
-    <div class="section-header">
-        <h2>Featured Vehicles</h2>
-        <p>Our most popular and highly-rated vehicles</p>
-    </div>
+<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+  <div class="mb-10 text-center">
+    <h2 class="text-3xl font-bold text-vroom-ink">Featured Vehicles</h2>
+    <p class="mt-2 text-vroom-muted">Our most popular and highly-rated vehicles</p>
+  </div>
 
-    <div class="vehicle-grid">
-        <% if (allrecs && allrecs.length > 0) { %>
-            <% allrecs.forEach((vehicle) => { %>
-                <div class="vehicle-card">
-                    <div class="vehicle-image">
-                        <img src="/images/<%= vehicle.prodimage %>" alt="<%= vehicle.description %>">
-                        <div class="vehicle-overlay">
-                            <span class="status-badge <%= vehicle.status.toLowerCase() %>">
-                                <i class="fas fa-circle"></i> <%= vehicle.status %>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="vehicle-details">
-                        <div class="vehicle-header">
-                            <h3><%= vehicle.description %></h3>
-                            <div class="vehicle-price">
-                                <span class="price-amount">$<%= vehicle.daily_fee %></span>
-                                <span class="price-period">/day</span>
-                            </div>
-                        </div>
-                        
-                        <div class="vehicle-badges">
-                            <span class="vehicle-type">
-                                <i class="fas fa-car"></i> <%= vehicle.vehicle_type %>
-                            </span>
-                            <span class="vehicle-location">
-                                <i class="fas fa-map-marker-alt"></i> Available Now
-                            </span>
-                        </div>
-                        
-                        <div class="vehicle-features">
-                            <div class="feature-item">
-                                <i class="fas fa-gas-pump"></i>
-                                <span>Fuel Efficient</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-shield-alt"></i>
-                                <span>Fully Insured</span>
-                            </div>
-                        </div>
-                        
-                        <div class="vehicle-actions">
-                            <a href="/vehicle/<%= vehicle.vehicle_id %>/show"" class="btn btn-primary">
-                                <i class="fas fa-info-circle"></i> View Details
-                            </a>
-                            
-                        </div>
-                    </div>
-                </div>
-            <% }); %>
-        <% } else { %>
-            <div class="no-vehicles">
-                <i class="fas fa-car-side"></i>
-                <p>No featured vehicles available at the moment.</p>
-                <a href="/catalog" class="btn btn-primary">View All Vehicles</a>
-            </div>
-        <% } %>
+  <% if (allrecs && allrecs.length > 0) { %>
+    <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+      <% allrecs.forEach((vehicle) => { %>
+        <%- include('partials/vehicle-card', { vehicle: vehicle }) %>
+      <% }); %>
     </div>
+  <% } else { %>
+    <div class="rounded-2xl border border-dashed border-vroom-line bg-white px-6 py-16 text-center">
+      <i class="fas fa-car-side text-4xl text-vroom-muted"></i>
+      <p class="mt-4 text-lg font-medium text-vroom-ink">No featured vehicles available at the moment.</p>
+      <a href="/catalog" class="btn-primary mt-6">View All Vehicles</a>
+    </div>
+  <% } %>
 </section>
-
-
-
-<body>
-</body>
-</html>

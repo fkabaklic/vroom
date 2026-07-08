@@ -1,0 +1,62 @@
+<div class="vehicle-card group overflow-hidden rounded-2xl border border-vroom-line bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+  <div class="relative aspect-[4/3] overflow-hidden bg-slate-100">
+    <img
+      src="/images/<%= vehicle.prodimage %>"
+      alt="<%= vehicle.description %>"
+      class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+    >
+    <div class="absolute left-3 top-3">
+      <span class="status-badge <%= vehicle.status.toLowerCase() %>">
+        <i class="fas fa-circle text-[6px]"></i> <%= vehicle.status %>
+      </span>
+    </div>
+  </div>
+
+  <div class="space-y-4 p-5">
+    <div class="flex items-start justify-between gap-3">
+      <h3 class="text-lg font-semibold leading-snug text-vroom-ink"><%= vehicle.description %></h3>
+      <div class="shrink-0 text-right">
+        <span class="text-xl font-bold text-vroom-ink">$<%= vehicle.daily_fee %></span>
+        <span class="block text-xs text-vroom-muted">/day</span>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <span class="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-vroom-ink">
+        <i class="fas fa-car"></i> <%= vehicle.vehicle_type %>
+      </span>
+      <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+        <i class="fas fa-map-marker-alt"></i> Available Now
+      </span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2 text-xs text-vroom-muted">
+      <div class="flex items-center gap-2 rounded-lg bg-vroom-canvas px-3 py-2">
+        <i class="fas fa-gas-pump text-vroom-accent"></i>
+        <span>Fuel Efficient</span>
+      </div>
+      <div class="flex items-center gap-2 rounded-lg bg-vroom-canvas px-3 py-2">
+        <i class="fas fa-shield-alt text-vroom-accent"></i>
+        <span>Fully Insured</span>
+      </div>
+    </div>
+
+    <div class="vehicle-actions flex flex-wrap gap-2 pt-1">
+      <% if (typeof showAddToCart !== 'undefined' && showAddToCart) { %>
+        <form action="/catalog/add" method="post" class="flex-1">
+          <input type="hidden" name="vehicle_id" value="<%= vehicle.vehicle_id %>">
+          <button type="submit" class="btn-primary w-full">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+        </form>
+        <a href="/vehicle/<%= vehicle.vehicle_id %>/show" class="btn-secondary">
+          <i class="fas fa-info-circle"></i> Details
+        </a>
+      <% } else { %>
+        <a href="/vehicle/<%= vehicle.vehicle_id %>/show" class="btn-primary w-full">
+          <i class="fas fa-info-circle"></i> View Details
+        </a>
+      <% } %>
+    </div>
+  </div>
+</div>

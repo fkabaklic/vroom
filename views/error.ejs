@@ -1,2 +1,11 @@
-<h1><%= 404 %></h1>
-
+<section class="flex min-h-[60vh] items-center justify-center px-4 py-16">
+  <div class="max-w-lg rounded-2xl border border-vroom-line bg-white p-10 text-center shadow-sm">
+    <p class="text-6xl font-bold text-vroom-ink"><%= error.status || 500 %></p>
+    <h1 class="mt-4 text-2xl font-semibold text-vroom-ink"><%= message || 'Something went wrong' %></h1>
+    <p class="mt-3 text-sm text-vroom-muted">We couldn't complete your request. Try again or return home.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="/" class="btn-primary"><i class="fas fa-home"></i> Go Home</a>
+      <a href="/catalog" class="btn-secondary"><i class="fas fa-car"></i> Browse Cars</a>
+    </div>
+  </div>
+</section>

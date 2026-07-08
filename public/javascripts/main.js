@@ -60,38 +60,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add active class to current navigation item
     const currentPath = window.location.pathname;
-    document.querySelectorAll('.nav-links a').forEach(link => {
+    document.querySelectorAll('.nav-menu a[href]').forEach(link => {
         if (link.getAttribute('href') === currentPath) {
             link.classList.add('active');
         }
     });
 
-    // Quick book functionality
-    document.querySelectorAll('.quick-book').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const vehicleId = this.getAttribute('data-vehicle-id');
-            
-            // Show a confirmation dialog
-            if (confirm('Would you like to quickly book this vehicle?')) {
-                // Redirect to the vehicle details page with booking intent
-                window.location.href = `/vehicle/${vehicleId}?booking=true`;
-            }
-        });
-    });
-
-    // Enhanced vehicle card interactions
-    const vehicleCards = document.querySelectorAll('.vehicle-card');
-    vehicleCards.forEach(card => {
-        // Add hover effects
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
-        });
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
-
-        // Add click handler for the entire card (except buttons and forms)
+    document.querySelectorAll('.vehicle-card').forEach(card => {
         card.addEventListener('click', function(e) {
             if (!e.target.closest('.btn') && !e.target.closest('.vehicle-actions') && !e.target.closest('form')) {
                 const vehicleLink = this.querySelector('a[href*="/vehicle/"]');
