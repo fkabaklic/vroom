@@ -1,21 +1,8 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "app.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "views/**",
-          "public/**"
-        ]
-      }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "app.js": {
+      "includeFiles": "views/**"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "app.js"
-    }
-  ]
+  }
 }
