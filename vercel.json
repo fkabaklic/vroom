@@ -5,5 +5,8 @@
     "app.js": {
       "includeFiles": "views/**"
     }
-  }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/app.js" }
+  ]
 }

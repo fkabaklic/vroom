@@ -4,51 +4,61 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var layouts = require('express-ejs-layouts');
-const mariadb = require('mariadb/callback');
+const mariadb = require('mariadb');
 const dotenv = require('dotenv');
 const session = require('express-session')
 
 dotenv.config();
 
-// Database connection with better error handling
-let db;
-const connectDB = async () => {
-  try {
-    if (!process.env.DB_HOST || !process.env.DB_USER || !process.env.DB_PASSWORD || !process.env.DB_DATABASE) {
-      console.error("Missing database environment variables");
-      return;
+// Serverless-safe DB access:
+// - no top-level network connection attempts on import
+// - a single lazily-created pool reused across invocations
+let dbPool;
+function getDbPool() {
+  if (dbPool) return dbPool;
+
+  const required = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_DATABASE'];
+  const missing = required.filter((k) => !process.env[k]);
+  if (missing.length) {
+    console.warn(`DB disabled: missing env ${missing.join(', ')}`);
+    return null;
+  }
+
+  const poolConfig = {
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    port: Number(process.env.DB_PORT || 3306),
+    connectTimeout: Number(process.env.DB_CONNECT_TIMEOUT_MS || 2000),
+    connectionLimit: Number(process.env.DB_POOL_LIMIT || 2)
+  };
+
+  if (process.env.DB_SSL === 'true') {
+    poolConfig.ssl = { rejectUnauthorized: true };
+  }
+
+  dbPool = mariadb.createPool(poolConfig);
+  return dbPool;
+}
+
+global.db = {
+  query: async (sql, params) => {
+    const pool = getDbPool();
+    if (!pool) {
+      const err = new Error('Database not configured');
+      err.code = 'DB_NOT_CONFIGURED';
+      throw err;
     }
-
-    const dbConfig = {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      port: process.env.DB_PORT || 3306
-    };
-
-    if (process.env.DB_SSL === 'true') {
-      dbConfig.ssl = { rejectUnauthorized: true };
+    let conn;
+    try {
+      conn = await pool.getConnection();
+      return await conn.query(sql, params);
+    } finally {
+      if (conn) conn.release();
     }
-
-    db = mariadb.createConnection(dbConfig);
-
-    db.connect((err) => {
-      if (err) {
-        console.error("Database connection error:", err);
-      } else {
-        console.log("Connected to DB successfully");
-      }
-    });
-  } catch (error) {
-    console.error("Failed to create database connection:", error);
   }
 };
-
-// Connect to database
-connectDB();
-
-global.db = db;
 
 var app = express();
 
@@ -128,7 +138,7 @@ app.use('/catalog', catalogRouter);
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
-    database: db ? 'connected' : 'disconnected',
+    database: getDbPool() ? 'configured' : 'disabled',
     environment: process.env.NODE_ENV || 'development',
     timestamp: new Date().toISOString()
   });
