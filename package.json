@@ -3,16 +3,19 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "node ./scripts/fix-gopd.js",
     "start": "node ./bin/www",
     "test-db": "node ./scripts/test-db.js",
     "init-db": "node ./scripts/init-db.js",
     "seed-vehicles": "node ./scripts/seed-vehicles.js",
+    "fix-gopd": "node ./scripts/fix-gopd.js",
     "build:css": "tailwindcss -i ./src/input.css -o ./public/stylesheets/tailwind.css --minify",
     "watch:css": "tailwindcss -i ./src/input.css -o ./public/stylesheets/tailwind.css --watch",
     "build": "npm install && npm run build:css",
-    "vercel-build": "npm install && npm run build:css"
+    "vercel-build": "npm install && npm run fix-gopd && npm run build:css"
   },
   "dependencies": {
+    "@tailwindcss/cli": "^4.3.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -23,14 +26,11 @@
     "express-session": "^1.18.0",
     "http-errors": "~1.6.3",
     "mariadb": "^3.3.0",
-    "morgan": "^1.11.0"
+    "morgan": "^1.11.0",
+    "tailwindcss": "^4.3.2"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": "22.x"
   },
-  "type": "commonjs",
-  "devDependencies": {
-    "@tailwindcss/cli": "^4.3.2",
-    "tailwindcss": "^4.3.2"
-  }
+  "type": "commonjs"
 }
