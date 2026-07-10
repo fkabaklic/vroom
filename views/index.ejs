@@ -1,45 +1,124 @@
-<section class="relative overflow-hidden bg-vroom-brand text-white">
-  <div class="absolute inset-0">
-    <img src="/images/vroom_hero_2.jpg" alt="" class="h-full w-full object-cover opacity-40">
-    <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/70 to-slate-900/30"></div>
-  </div>
+<section class="px-4 pt-2 sm:px-6 lg:px-8">
+  <div class="relative mx-auto max-w-7xl overflow-hidden rounded-[28px]">
+    <div class="relative min-h-[420px] sm:min-h-[520px] lg:min-h-[580px]">
+      <img
+        src="/images/vroom_hero_2.jpg"
+        alt="Premium car ready to rent"
+        class="absolute inset-0 h-full w-full object-cover"
+      >
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10"></div>
 
-  <div class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
-    <div class="max-w-2xl">
-      <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-blue-300">Premium car rentals</p>
-      <h1 class="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">Find the Perfect Car for Any Trip</h1>
-      <p class="mt-5 max-w-xl text-lg leading-relaxed text-slate-200">
-        Choose from our curated fleet of luxury, electric, and sports vehicles for your next adventure.
-      </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a href="/catalog" class="btn-primary bg-white text-vroom-brand hover:bg-slate-100">
-          <i class="fas fa-car"></i> Browse Cars
-        </a>
-        <a href="/customer/register" class="btn-secondary border-white/20 bg-white/10 text-white hover:bg-white/20">
-          <i class="fas fa-user-plus"></i> Get Started
-        </a>
+      <div class="relative flex h-full min-h-[420px] flex-col justify-end px-5 pb-28 pt-16 sm:min-h-[520px] sm:px-10 sm:pb-32 lg:min-h-[580px] lg:px-14">
+        <div class="max-w-2xl animate-[fadeUp_0.7s_ease-out]">
+          <h1 class="font-display text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            Find your perfect ride
+          </h1>
+          <p class="mt-4 max-w-xl text-base leading-relaxed text-white/90 sm:text-lg">
+            Rent the exact car you want, exactly where you need it, for days, weeks, or months.
+          </p>
+        </div>
       </div>
     </div>
+
+    <form
+      action="/search"
+      method="get"
+      class="absolute bottom-5 left-5 right-5 mx-auto max-w-4xl rounded-full border border-black/5 bg-white p-2 shadow-2xl sm:bottom-8 sm:left-10 sm:right-10 lg:left-14 lg:right-14"
+    >
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <label class="flex flex-1 cursor-text items-center gap-3 rounded-full px-4 py-2.5 hover:bg-neutral-50">
+          <div class="min-w-0 flex-1">
+            <span class="block text-xs font-semibold text-vroom-ink">Where</span>
+            <input
+              type="text"
+              name="searchcriteria"
+              placeholder="City, car type, or model"
+              value="<%= locals.searchcriteria || '' %>"
+              class="w-full border-0 bg-transparent p-0 text-sm text-vroom-ink outline-none placeholder:text-vroom-muted"
+            >
+          </div>
+        </label>
+
+        <div class="hidden h-10 w-px bg-vroom-line sm:block"></div>
+
+        <label class="flex flex-1 cursor-text items-center gap-3 rounded-full px-4 py-2.5 hover:bg-neutral-50">
+          <div class="min-w-0 flex-1">
+            <span class="block text-xs font-semibold text-vroom-ink">From</span>
+            <input
+              type="date"
+              name="from"
+              class="w-full border-0 bg-transparent p-0 text-sm text-vroom-ink outline-none"
+            >
+          </div>
+        </label>
+
+        <div class="hidden h-10 w-px bg-vroom-line sm:block"></div>
+
+        <label class="flex flex-1 cursor-text items-center gap-3 rounded-full px-4 py-2.5 hover:bg-neutral-50">
+          <div class="min-w-0 flex-1">
+            <span class="block text-xs font-semibold text-vroom-ink">Until</span>
+            <input
+              type="date"
+              name="until"
+              class="w-full border-0 bg-transparent p-0 text-sm text-vroom-ink outline-none"
+            >
+          </div>
+        </label>
+
+        <button
+          type="submit"
+          class="flex h-12 w-full items-center justify-center rounded-full bg-vroom-accent text-white transition hover:bg-vroom-accent-dark sm:w-12 sm:shrink-0"
+          aria-label="Search"
+        >
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </form>
   </div>
 </section>
 
-<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-  <div class="mb-10 text-center">
-    <h2 class="text-3xl font-bold text-vroom-ink">Featured Vehicles</h2>
-    <p class="mt-2 text-vroom-muted">Our most popular and highly-rated vehicles</p>
+<section class="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
+  <div class="flex gap-2 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <a href="/catalog" class="category-pill active"><i class="fas fa-border-all"></i> All</a>
+    <a href="/search?searchcriteria=Luxury" class="category-pill"><i class="fas fa-gem"></i> Luxury</a>
+    <a href="/search?searchcriteria=Electric" class="category-pill"><i class="fas fa-bolt"></i> Electric</a>
+    <a href="/search?searchcriteria=Sports" class="category-pill"><i class="fas fa-flag-checkered"></i> Sports</a>
+    <a href="/search?searchcriteria=SUV" class="category-pill"><i class="fas fa-car-side"></i> Nearby</a>
+    <a href="/catalog" class="category-pill"><i class="fas fa-truck"></i> Delivered</a>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+  <div class="mb-6 flex items-end justify-between gap-4">
+    <div>
+      <h2 class="text-2xl font-bold tracking-tight text-vroom-ink sm:text-3xl">Featured cars near you</h2>
+      <p class="mt-1 text-sm text-vroom-muted">Average daily prices for a short trip</p>
+    </div>
+    <div class="hidden items-center gap-2 sm:flex">
+      <a href="/catalog" class="flex h-10 w-10 items-center justify-center rounded-full border border-vroom-line text-vroom-ink transition hover:bg-neutral-50" aria-label="Browse catalog">
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
   </div>
 
   <% if (allrecs && allrecs.length > 0) { %>
-    <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+    <div class="grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
       <% allrecs.forEach((vehicle) => { %>
         <%- include('partials/vehicle-card', { vehicle: vehicle }) %>
       <% }); %>
     </div>
   <% } else { %>
-    <div class="rounded-2xl border border-dashed border-vroom-line bg-white px-6 py-16 text-center">
+    <div class="rounded-3xl border border-dashed border-vroom-line px-6 py-16 text-center">
       <i class="fas fa-car-side text-4xl text-vroom-muted"></i>
-      <p class="mt-4 text-lg font-medium text-vroom-ink">No featured vehicles available at the moment.</p>
-      <a href="/catalog" class="btn-primary mt-6">View All Vehicles</a>
+      <p class="mt-4 text-lg font-medium text-vroom-ink">No featured vehicles available right now.</p>
+      <a href="/catalog" class="btn-primary mt-6">Browse all cars</a>
     </div>
   <% } %>
 </section>
+
+<style>
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

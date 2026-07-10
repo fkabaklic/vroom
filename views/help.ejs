@@ -1,5 +1,105 @@
-<div class="hero">
-    <div class="hero-content"> 
-          <h2>Help</h2>  
-</div>
- 
+<section class="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
+  <div class="rounded-[28px] bg-neutral-50 px-6 py-14 text-center sm:px-10">
+    <p class="text-sm font-semibold uppercase tracking-[0.18em] text-vroom-muted">Support</p>
+    <h1 class="mt-3 text-3xl font-bold tracking-tight text-vroom-ink sm:text-4xl">Help Center</h1>
+    <p class="mx-auto mt-3 max-w-xl text-sm text-vroom-muted sm:text-base">
+      Find answers about booking, payments, cancellations, and hosting — or reach out if you need a hand.
+    </p>
+    <form action="/search" method="get" class="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-full border border-vroom-line bg-white p-2 shadow-sm">
+      <input
+        type="text"
+        name="searchcriteria"
+        placeholder="Search cars or topics..."
+        class="min-w-0 flex-1 border-0 bg-transparent px-4 py-2 text-sm outline-none"
+      >
+      <button type="submit" class="flex h-10 w-10 items-center justify-center rounded-full bg-vroom-accent text-white" aria-label="Search">
+        <i class="fas fa-search text-sm"></i>
+      </button>
+    </form>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <a href="#booking" class="rounded-3xl border border-vroom-line bg-white p-5 transition hover:border-vroom-ink/20 hover:shadow-sm">
+      <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-neutral-100 text-vroom-accent"><i class="fas fa-calendar-check"></i></div>
+      <h2 class="mt-4 font-semibold text-vroom-ink">Booking</h2>
+      <p class="mt-1 text-sm text-vroom-muted">Reserve a car and manage trips</p>
+    </a>
+    <a href="#payments" class="rounded-3xl border border-vroom-line bg-white p-5 transition hover:border-vroom-ink/20 hover:shadow-sm">
+      <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-neutral-100 text-vroom-accent"><i class="fas fa-credit-card"></i></div>
+      <h2 class="mt-4 font-semibold text-vroom-ink">Payments</h2>
+      <p class="mt-1 text-sm text-vroom-muted">Pricing, taxes, and receipts</p>
+    </a>
+    <a href="#cancellations" class="rounded-3xl border border-vroom-line bg-white p-5 transition hover:border-vroom-ink/20 hover:shadow-sm">
+      <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-neutral-100 text-vroom-accent"><i class="fas fa-rotate-left"></i></div>
+      <h2 class="mt-4 font-semibold text-vroom-ink">Cancellations</h2>
+      <p class="mt-1 text-sm text-vroom-muted">Refunds and trip changes</p>
+    </a>
+    <a href="#hosting" class="rounded-3xl border border-vroom-line bg-white p-5 transition hover:border-vroom-ink/20 hover:shadow-sm">
+      <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-neutral-100 text-vroom-accent"><i class="fas fa-key"></i></div>
+      <h2 class="mt-4 font-semibold text-vroom-ink">Hosting</h2>
+      <p class="mt-1 text-sm text-vroom-muted">List your vehicle on Vroom</p>
+    </a>
+  </div>
+</section>
+
+<section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6 lg:px-8">
+  <div id="booking" class="border-t border-vroom-line py-8">
+    <h2 class="text-xl font-bold text-vroom-ink">Booking</h2>
+    <div class="mt-5 space-y-5">
+      <div>
+        <h3 class="font-semibold text-vroom-ink">How do I book a car?</h3>
+        <p class="mt-2 text-sm leading-relaxed text-vroom-muted">Browse the catalog, open a vehicle page, choose your trip dates, then continue to add it to your cart and check out.</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-vroom-ink">What do I need to rent?</h3>
+        <p class="mt-2 text-sm leading-relaxed text-vroom-muted">A valid driver's license, a payment method, and an active Vroom account. Some vehicles may have additional age or insurance requirements.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="payments" class="border-t border-vroom-line py-8">
+    <h2 class="text-xl font-bold text-vroom-ink">Payments</h2>
+    <div class="mt-5 space-y-5">
+      <div>
+        <h3 class="font-semibold text-vroom-ink">When am I charged?</h3>
+        <p class="mt-2 text-sm leading-relaxed text-vroom-muted">You'll see trip totals before taxes on the vehicle page. Final charges are confirmed at checkout. You won't be charged until you complete checkout.</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-vroom-ink">Are there hidden fees?</h3>
+        <p class="mt-2 text-sm leading-relaxed text-vroom-muted">Daily rates are shown upfront. Taxes and any applicable fees appear before you confirm your order.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="cancellations" class="border-t border-vroom-line py-8">
+    <h2 class="text-xl font-bold text-vroom-ink">Cancellations</h2>
+    <div class="mt-5 space-y-5">
+      <div>
+        <h3 class="font-semibold text-vroom-ink">Can I cancel a booking?</h3>
+        <p class="mt-2 text-sm leading-relaxed text-vroom-muted">Yes. Log in, open your profile, and review your orders. Cancellations made 24+ hours before pickup are typically fully refunded.</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-vroom-ink">How do refunds work?</h3>
+        <p class="mt-2 text-sm leading-relaxed text-vroom-muted">Approved refunds are returned to your original payment method. Processing times vary by bank.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="hosting" class="border-t border-vroom-line py-8">
+    <h2 class="text-xl font-bold text-vroom-ink">Hosting</h2>
+    <div class="mt-5 space-y-5">
+      <div>
+        <h3 class="font-semibold text-vroom-ink">Can I list my car?</h3>
+        <p class="mt-2 text-sm leading-relaxed text-vroom-muted">Yes. Contact our team to get started as a host. We'll help you set pricing, availability, and listing details.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 rounded-3xl border border-vroom-line bg-neutral-50 p-6 text-center sm:p-8">
+    <h2 class="text-lg font-semibold text-vroom-ink">Still need help?</h2>
+    <p class="mt-2 text-sm text-vroom-muted">Our support team is available Mon–Fri, 8 AM – 6 PM CT.</p>
+    <a href="/contact" class="btn-primary mt-5">Contact support</a>
+  </div>
+</section>

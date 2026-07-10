@@ -4,16 +4,17 @@
 @source "../public/javascripts/**/*.js";
 
 @theme {
-  --font-sans: "Poppins", "Inter", system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", "Poppins", system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Poppins", system-ui, sans-serif;
 
-  --color-vroom-ink: #0f172a;
-  --color-vroom-muted: #64748b;
-  --color-vroom-line: #e2e8f0;
+  --color-vroom-ink: #111111;
+  --color-vroom-muted: #6b7280;
+  --color-vroom-line: #e5e7eb;
   --color-vroom-surface: #ffffff;
-  --color-vroom-canvas: #f8fafc;
-  --color-vroom-brand: #0f172a;
-  --color-vroom-accent: #2563eb;
-  --color-vroom-accent-dark: #1d4ed8;
+  --color-vroom-canvas: #ffffff;
+  --color-vroom-brand: #111111;
+  --color-vroom-accent: #0f766e;
+  --color-vroom-accent-dark: #0d5f59;
   --color-vroom-success: #16a34a;
   --color-vroom-warning: #d97706;
   --color-vroom-danger: #dc2626;
@@ -25,29 +26,29 @@
   }
 
   body {
-    @apply bg-vroom-canvas font-sans text-vroom-ink antialiased;
+    @apply bg-white font-sans text-vroom-ink antialiased;
   }
 }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition duration-200;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition duration-200;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-vroom-brand px-5 py-2.5 text-sm font-semibold text-white transition duration-200 hover:bg-slate-800;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-vroom-brand px-5 py-2.5 text-sm font-semibold text-white transition duration-200 hover:bg-neutral-800;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-vroom-line bg-white px-5 py-2.5 text-sm font-semibold text-vroom-ink transition duration-200 hover:bg-slate-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-vroom-line bg-white px-5 py-2.5 text-sm font-semibold text-vroom-ink transition duration-200 hover:bg-neutral-50;
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-vroom-line bg-transparent px-5 py-2.5 text-sm font-semibold text-vroom-ink transition duration-200 hover:bg-white;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-vroom-line bg-transparent px-5 py-2.5 text-sm font-semibold text-vroom-ink transition duration-200 hover:bg-neutral-50;
   }
 
   .btn-danger {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-red-700;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-red-700;
   }
 
   .btn-block,
@@ -72,29 +73,15 @@
   }
 
   .nav-menu.active {
-    @apply absolute left-0 right-0 top-full z-40 flex flex-col gap-1 border-b border-vroom-line bg-white p-4 shadow-lg md:static md:flex-row md:border-0 md:bg-transparent md:p-0 md:shadow-none;
+    @apply block;
   }
 
-  @media (min-width: 768px) {
-    .nav-menu {
-      display: flex !important;
-    }
+  .category-pill {
+    @apply inline-flex shrink-0 items-center gap-2 rounded-full border border-vroom-line bg-white px-4 py-2.5 text-sm font-medium text-vroom-ink transition hover:bg-neutral-50;
   }
 
-  .mobile-menu-btn.active span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-  }
-
-  .mobile-menu-btn.active span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .mobile-menu-btn.active span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-  }
-
-  .nav-links a.active {
-    @apply text-vroom-accent;
+  .category-pill.active {
+    @apply border-vroom-ink bg-vroom-ink text-white hover:bg-neutral-800;
   }
 
   .form-section {
@@ -136,7 +123,7 @@
   .form-group input,
   .form-group select,
   .form-group textarea {
-    @apply w-full rounded-xl border border-vroom-line bg-vroom-canvas px-4 py-3 text-sm outline-none transition focus:border-vroom-accent focus:bg-white focus:ring-2 focus:ring-blue-100;
+    @apply w-full rounded-xl border border-vroom-line bg-white px-4 py-3 text-sm outline-none transition focus:border-vroom-ink focus:ring-2 focus:ring-neutral-200;
   }
 
   .form-actions {
@@ -149,7 +136,7 @@
   }
 
   th {
-    @apply bg-slate-100 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-vroom-ink;
+    @apply bg-neutral-100 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-vroom-ink;
   }
 
   td {
@@ -158,7 +145,7 @@
 
   .btn2,
   .btn3 {
-    @apply inline-flex items-center justify-center rounded-lg bg-vroom-brand px-3 py-2 text-xs font-semibold text-white transition hover:bg-slate-800;
+    @apply inline-flex items-center justify-center rounded-full bg-vroom-brand px-3 py-2 text-xs font-semibold text-white transition hover:bg-neutral-800;
   }
 
   select,

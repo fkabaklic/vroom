@@ -1,10 +1,25 @@
-
-    <div class="hero-content">
-
-        <h1>Thank you for the order.</h1>
-        <p> Your Order Number is: <%= ordernum %> </p>
-
+<section class="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
+  <div class="rounded-[28px] bg-neutral-50 px-6 py-14 text-center sm:px-10">
+    <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-xl text-emerald-700">
+      <i class="fas fa-check"></i>
     </div>
+    <h1 class="mt-5 text-3xl font-bold tracking-tight text-vroom-ink sm:text-4xl">Thank you for your order</h1>
+    <p class="mx-auto mt-3 max-w-lg text-sm text-vroom-muted sm:text-base">
+      Your booking is confirmed. Keep this order number for your records.
+    </p>
+  </div>
+</section>
 
-
-
+<section class="mx-auto max-w-xl px-4 py-10 sm:px-6 lg:px-8">
+  <div class="rounded-3xl border border-vroom-line bg-white p-6 text-center shadow-sm sm:p-8">
+    <p class="text-sm font-semibold uppercase tracking-wide text-vroom-muted">Order number</p>
+    <p class="mt-2 text-3xl font-bold text-vroom-ink"><%= ordernum %></p>
+    <p class="mt-4 text-sm text-vroom-muted">
+      A confirmation will appear in your account history. Safe travels!
+    </p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="/catalog" class="btn-primary">Browse more cars</a>
+      <a href="/" class="btn-secondary">Back home</a>
+    </div>
+  </div>
+</section>

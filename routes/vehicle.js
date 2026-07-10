@@ -39,7 +39,10 @@ router.get('/:recordid/show',  function(req, res, next) {
 			console.log(err);
 			res.render('error');
 		} else {
-			res.render('vehicle/onerec', {onerec: result[0] });
+			res.render('vehicle/onerec', {
+				title: result[0] ? result[0].description : 'Vehicle',
+				onerec: result[0]
+			});
 	} 
 	});
 });

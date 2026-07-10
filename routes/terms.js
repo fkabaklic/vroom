@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-/* get privacy page. */
 router.get('/', function(req, res, next) {
-  res.render('privacy', { title: 'Privacy Policy' });
+  res.render('terms', { title: 'Terms of Service' });
 });
 
 module.exports = router;

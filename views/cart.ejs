@@ -1,80 +1,136 @@
-<% var totprice = 0 %>
-<% var lineitemcost = 0 %>
-<section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-  <% if (cartitems != '0') { %>
-    <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-      <div>
-        <h1 class="flex items-center gap-3 text-3xl font-bold text-vroom-ink">
-          <i class="fas fa-shopping-cart text-vroom-accent"></i> Your Cart
-        </h1>
-        <p class="mt-1 text-sm text-vroom-muted"><%= cartitems.length %> item<%= cartitems.length > 1 ? 's' : '' %> in your cart</p>
-      </div>
-      <a href="/catalog" class="btn-outline">
-        <i class="fas fa-arrow-left"></i> Continue Shopping
+<%
+  var totprice = 0;
+  var money = (n) => Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n || 0);
+%>
+
+<section class="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
+  <div class="rounded-[28px] bg-neutral-50 px-6 py-10 sm:px-10">
+    <p class="text-sm font-semibold uppercase tracking-[0.18em] text-vroom-muted">Your trip</p>
+    <h1 class="mt-2 text-3xl font-bold tracking-tight text-vroom-ink sm:text-4xl">Cart</h1>
+    <% if (cartitems != '0' && cartitems && cartitems.length) { %>
+      <p class="mt-2 text-sm text-vroom-muted"><%= cartitems.length %> vehicle<%= cartitems.length === 1 ? '' : 's' %> ready to book</p>
+    <% } else { %>
+      <p class="mt-2 text-sm text-vroom-muted">Your cart is empty — find a car and add it to get started.</p>
+    <% } %>
+  </div>
+</section>
+
+<section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+  <% if (cartitems != '0' && cartitems && cartitems.length) { %>
+    <div class="mb-6">
+      <a href="/catalog" class="inline-flex items-center gap-2 text-sm font-medium text-vroom-muted transition hover:text-vroom-ink">
+        <i class="fas fa-arrow-left"></i> Continue browsing
       </a>
     </div>
 
-    <div class="grid gap-8 lg:grid-cols-[1fr_320px]">
+    <div class="grid gap-8 lg:grid-cols-[1fr_360px] lg:items-start">
       <div class="space-y-4">
         <% cartitems.forEach((item) => {
-          var lineitemcost = item.daily_fee * item.duration;
+          var days = parseInt(item.duration, 10) || 3;
+          var lineitemcost = Number(item.daily_fee) * days;
           totprice = totprice + lineitemcost;
         %>
-          <article class="flex flex-col gap-4 rounded-2xl border border-vroom-line bg-white p-4 shadow-sm sm:flex-row sm:items-center">
-            <img src="/images/<%= item.prodimage %>" alt="<%= item.description %>" class="h-32 w-full rounded-xl object-cover sm:h-24 sm:w-36">
-            <div class="flex-1 space-y-2">
-              <h3 class="text-lg font-semibold text-vroom-ink"><%= item.description %></h3>
-              <div class="flex flex-wrap gap-3 text-sm text-vroom-muted">
-                <span class="inline-flex items-center gap-1.5"><i class="fas fa-clock"></i> <%= item.duration %> days</span>
-                <span class="inline-flex items-center gap-1.5"><i class="fas fa-tag"></i> <%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.daily_fee) %>/day</span>
+          <article class="overflow-hidden rounded-3xl border border-vroom-line bg-white">
+            <div class="flex flex-col sm:flex-row">
+              <a href="/vehicle/<%= item.vehicle_id %>/show" class="block shrink-0 sm:w-48">
+                <img
+                  src="/images/<%= item.prodimage %>"
+                  alt="<%= item.description %>"
+                  class="h-44 w-full object-cover sm:h-full sm:min-h-[160px]"
+                >
+              </a>
+
+              <div class="flex flex-1 flex-col justify-between gap-4 p-5">
+                <div class="flex flex-col gap-4 sm:flex-row sm:justify-between">
+                  <div>
+                    <a href="/vehicle/<%= item.vehicle_id %>/show" class="text-lg font-semibold text-vroom-ink hover:underline">
+                      <%= item.description %>
+                    </a>
+                    <p class="mt-1 text-sm text-vroom-muted">
+                      <%= item.vehicle_type %> · <%= item.status %>
+                    </p>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                      <span class="inline-flex items-center gap-1.5 rounded-xl bg-neutral-100 px-3 py-1.5 text-xs font-medium text-vroom-ink">
+                        <i class="fas fa-clock text-vroom-muted"></i> <%= days %> days
+                      </span>
+                      <span class="inline-flex items-center gap-1.5 rounded-xl bg-neutral-100 px-3 py-1.5 text-xs font-medium text-vroom-ink">
+                        <i class="fas fa-tag text-vroom-muted"></i> <%= money(item.daily_fee) %>/day
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="text-left sm:text-right">
+                    <p class="text-xs font-semibold uppercase tracking-wide text-vroom-muted">Trip total</p>
+                    <p class="mt-1 text-xl font-bold text-vroom-ink"><%= money(lineitemcost) %></p>
+                    <p class="text-xs text-vroom-muted">Before taxes</p>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 border-t border-vroom-line pt-4">
+                  <a href="/vehicle/<%= item.vehicle_id %>/show" class="text-sm font-medium text-vroom-accent hover:underline">
+                    View details
+                  </a>
+                  <form action="/catalog/remove" method="post">
+                    <input type="hidden" name="vehicle_id" value="<%= item.vehicle_id %>">
+                    <button type="submit" class="text-sm font-medium text-vroom-muted transition hover:text-red-600">
+                      <i class="fas fa-trash-alt"></i> Remove
+                    </button>
+                  </form>
+                </div>
               </div>
-              <form action="/catalog/remove" method="post">
-                <input type="hidden" name="vehicle_id" value="<%= item.vehicle_id %>">
-                <button type="submit" class="btn-danger">
-                  <i class="fas fa-trash"></i> Remove
-                </button>
-              </form>
-            </div>
-            <div class="text-right">
-              <p class="text-xs uppercase tracking-wide text-vroom-muted">Line total</p>
-              <p class="text-xl font-bold text-vroom-ink"><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(lineitemcost) %></p>
             </div>
           </article>
         <% }); %>
       </div>
 
-      <aside class="h-fit rounded-2xl border border-vroom-line bg-white p-6 shadow-sm">
-        <h3 class="flex items-center gap-2 text-lg font-semibold text-vroom-ink">
-          <i class="fas fa-receipt text-vroom-accent"></i> Order Summary
-        </h3>
-        <div class="mt-5 space-y-3 text-sm">
-          <div class="flex justify-between"><span class="text-vroom-muted">Subtotal</span><span class="font-medium"><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totprice) %></span></div>
-          <div class="flex justify-between"><span class="text-vroom-muted">Tax (8%)</span><span class="font-medium"><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totprice * 0.08) %></span></div>
-          <div class="border-t border-vroom-line pt-3">
-            <div class="flex justify-between text-base font-bold">
-              <span>Total</span>
-              <span><%= Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totprice * 1.08) %></span>
+      <aside class="lg:sticky lg:top-24">
+        <div class="rounded-3xl border border-vroom-line bg-white p-6 shadow-sm">
+          <h2 class="text-lg font-semibold text-vroom-ink">Order summary</h2>
+
+          <div class="mt-5 space-y-3 text-sm">
+            <div class="flex justify-between">
+              <span class="text-vroom-muted">Subtotal</span>
+              <span class="font-medium text-vroom-ink"><%= money(totprice) %></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-vroom-muted">Tax (8%)</span>
+              <span class="font-medium text-vroom-ink"><%= money(totprice * 0.08) %></span>
+            </div>
+            <div class="border-t border-vroom-line pt-3">
+              <div class="flex justify-between text-base">
+                <span class="font-semibold text-vroom-ink">Total</span>
+                <span class="font-bold text-vroom-ink"><%= money(totprice * 1.08) %></span>
+              </div>
+              <p class="mt-1 text-xs text-vroom-muted">Includes estimated tax</p>
             </div>
           </div>
+
+          <a href="/catalog/checkout" class="btn-primary mt-6 w-full py-3 text-base">
+            Continue to checkout
+          </a>
+          <p class="mt-3 flex items-center justify-center gap-2 text-xs text-vroom-muted">
+            <i class="fas fa-shield-alt text-vroom-accent"></i> Secure checkout
+          </p>
         </div>
-        <a href="/catalog/checkout" class="btn-primary btn-full mt-6">
-          <i class="fas fa-lock"></i> Proceed to Checkout
-        </a>
-        <p class="mt-3 flex items-center justify-center gap-2 text-xs text-vroom-muted">
-          <i class="fas fa-shield-alt"></i> Secure Checkout
-        </p>
+
+        <div class="mt-4 rounded-3xl bg-neutral-50 p-5 text-sm text-vroom-muted">
+          <p class="font-medium text-vroom-ink">Need to change dates?</p>
+          <p class="mt-1">Open a vehicle page to review trip details before checkout.</p>
+        </div>
       </aside>
     </div>
   <% } else { %>
-    <div class="rounded-2xl border border-vroom-line bg-white px-6 py-20 text-center shadow-sm">
-      <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-slate-100 text-3xl text-vroom-muted">
+    <div class="rounded-[28px] border border-dashed border-vroom-line px-6 py-20 text-center">
+      <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-neutral-100 text-2xl text-vroom-muted">
         <i class="fas fa-shopping-cart"></i>
       </div>
-      <h2 class="mt-6 text-2xl font-bold text-vroom-ink">Your Cart is Empty</h2>
-      <p class="mx-auto mt-3 max-w-md text-vroom-muted">Looks like you haven't added any vehicles yet. Start exploring our premium fleet.</p>
+      <h2 class="mt-6 text-2xl font-bold tracking-tight text-vroom-ink">Your cart is empty</h2>
+      <p class="mx-auto mt-3 max-w-md text-sm text-vroom-muted">
+        Browse the fleet and add a car to start planning your trip.
+      </p>
       <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a href="/catalog" class="btn-primary"><i class="fas fa-car"></i> Browse Vehicles</a>
-        <a href="/" class="btn-outline"><i class="fas fa-home"></i> Go Home</a>
+        <a href="/catalog" class="btn-primary">Browse cars</a>
+        <a href="/" class="btn-secondary">Go home</a>
       </div>
     </div>
   <% } %>

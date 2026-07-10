@@ -1,35 +1,31 @@
-<section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-  <div class="mb-8">
-    <h2 class="text-3xl font-bold text-vroom-ink">Search Results</h2>
-    <p class="mt-2 text-vroom-muted">
-      Found <%= allrecs.length %> vehicle<%= allrecs.length !== 1 ? 's' : '' %> matching your search
+<section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold tracking-tight text-vroom-ink sm:text-3xl">Search results</h1>
+    <p class="mt-1 text-sm text-vroom-muted">
+      Found <%= allrecs.length %> vehicle<%= allrecs.length !== 1 ? 's' : '' %>
+      <% if (locals.searchcriteria) { %>
+        for "<%= searchcriteria %>"
+      <% } %>
     </p>
     <% if (locals.searchcriteria) { %>
-      <div class="mt-4 inline-flex flex-wrap items-center gap-3 rounded-xl border border-vroom-line bg-white px-4 py-3 text-sm">
-        <i class="fas fa-search text-vroom-accent"></i>
-        <span>Searching for: "<strong><%= searchcriteria %></strong>"</span>
-        <a href="/catalog" class="btn-secondary py-1.5 text-xs">
-          <i class="fas fa-times"></i> Clear
-        </a>
-      </div>
+      <a href="/catalog" class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-vroom-accent hover:underline">
+        <i class="fas fa-times"></i> Clear search
+      </a>
     <% } %>
   </div>
 
   <% if (allrecs && allrecs.length > 0) { %>
-    <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+    <div class="grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <% allrecs.forEach((vehicle) => { %>
         <%- include('partials/vehicle-card', { vehicle: vehicle, showAddToCart: true }) %>
       <% }); %>
     </div>
   <% } else { %>
-    <div class="rounded-2xl border border-dashed border-vroom-line bg-white px-6 py-16 text-center">
+    <div class="rounded-3xl border border-dashed border-vroom-line px-6 py-16 text-center">
       <i class="fas fa-search text-4xl text-vroom-muted"></i>
       <h3 class="mt-4 text-xl font-semibold text-vroom-ink">No vehicles found</h3>
-      <p class="mt-2 text-vroom-muted">We couldn't find any vehicles matching "<%= locals.searchcriteria || 'your search' %>"</p>
-      <div class="mt-6 flex flex-wrap justify-center gap-3">
-        <a href="/catalog" class="btn-primary"><i class="fas fa-car"></i> Browse All Vehicles</a>
-        <a href="/" class="btn-secondary"><i class="fas fa-home"></i> Return Home</a>
-      </div>
+      <p class="mt-2 text-vroom-muted">Try a different city, type, or model.</p>
+      <a href="/catalog" class="btn-primary mt-6">Browse all cars</a>
     </div>
   <% } %>
 </section>

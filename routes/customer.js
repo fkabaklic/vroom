@@ -14,14 +14,14 @@ function adminonly(req,res,next){
 // URL: http://localhost:3018/customer/register
 // ==================================================
 router.get('/register', function(req, res, next) {
-	res.render('customer/addrec');
+	res.render('customer/addrec', { title: 'Create account' });
 });
 
 // ==================================================
 // Route Provide Login Window
 // ==================================================
 router.get('/login', function(req, res, next) {
-	res.render('customer/login', {message: "Please Login"});
+	res.render('customer/login', { title: 'Sign in', message: "" });
 });
 
 // ==================================================

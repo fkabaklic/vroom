@@ -1,69 +1,177 @@
-<section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-  <div class="grid gap-8 lg:grid-cols-2">
-    <div class="overflow-hidden rounded-2xl border border-vroom-line bg-white shadow-sm">
-      <img src="/images/<%= onerec.prodimage %>" alt="<%= onerec.description %>" class="aspect-[4/3] w-full object-cover">
+<%
+  const days = parseInt(onerec.duration, 10) || 3;
+  const daily = Number(onerec.daily_fee) || 0;
+  const total = daily * days;
+  const listPrice = Math.round(total * 1.05);
+  const type = (onerec.vehicle_type || '').toLowerCase();
+  const seats = type.includes('sports') ? 2 : (type.includes('suv') ? 5 : 4);
+  const fuel = type.includes('electric') ? 'Electric' : 'Gas (Premium)';
+  const mpg = type.includes('electric') ? '120 MPGe' : '21 MPG';
+  const transmission = 'Automatic transmission';
+%>
+
+<section class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+  <a href="/catalog" class="mb-5 inline-flex items-center gap-2 text-sm font-medium text-vroom-muted transition hover:text-vroom-ink">
+    <i class="fas fa-arrow-left"></i> Back to cars
+  </a>
+
+  <!-- Photo gallery -->
+  <div class="grid gap-2 sm:grid-cols-3 sm:gap-3">
+    <div class="relative overflow-hidden rounded-2xl bg-neutral-100 sm:col-span-2 sm:row-span-2">
+      <img
+        src="/images/<%= onerec.prodimage %>"
+        alt="<%= onerec.description %>"
+        class="aspect-[4/3] h-full w-full object-cover sm:aspect-auto sm:min-h-[420px]"
+      >
     </div>
 
-    <div class="space-y-6">
-      <div>
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="status-badge <%= onerec.status.toLowerCase() %>"><%= onerec.status %></span>
-          <% if (onerec.featured) { %>
-            <span class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
-              <i class="fas fa-star"></i> Featured
-            </span>
-          <% } %>
-        </div>
-        <h1 class="mt-4 text-3xl font-bold text-vroom-ink sm:text-4xl"><%= onerec.description %></h1>
+    <div class="relative hidden overflow-hidden rounded-2xl bg-neutral-100 sm:block">
+      <img
+        src="/images/<%= onerec.prodimage %>"
+        alt=""
+        class="h-full min-h-[204px] w-full object-cover object-[30%_70%]"
+      >
+      <button type="button" class="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-vroom-ink shadow-sm" aria-label="Save">
+        <i class="far fa-heart"></i>
+      </button>
+    </div>
+
+    <div class="relative hidden overflow-hidden rounded-2xl bg-neutral-100 sm:block">
+      <img
+        src="/images/<%= onerec.prodimage %>"
+        alt=""
+        class="h-full min-h-[204px] w-full object-cover object-[70%_80%]"
+      >
+      <span class="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-vroom-ink shadow-sm">
+        <i class="far fa-images"></i> View photos
+      </span>
+    </div>
+  </div>
+
+  <div class="mt-8 grid gap-10 lg:grid-cols-[1fr_360px]">
+    <!-- Left: details -->
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-vroom-ink sm:text-4xl"><%= onerec.description %></h1>
+      <p class="mt-2 text-sm text-vroom-muted sm:text-base">
+        <%= onerec.vehicle_type %>
+        · 5.0 <i class="fas fa-star text-[11px]"></i> (<%= 20 + (onerec.vehicle_id * 7) %> trips)
+        <% if (onerec.featured) { %>
+          · <span class="inline-flex items-center gap-1 font-medium text-vroom-ink"><i class="fas fa-medal text-vroom-accent"></i> All-Star Host</span>
+        <% } %>
+      </p>
+
+      <div class="mt-5 flex flex-wrap gap-2">
+        <span class="inline-flex items-center gap-2 rounded-xl bg-neutral-100 px-3 py-2 text-sm text-vroom-ink">
+          <i class="fas fa-couch text-vroom-muted"></i> <%= seats %> seats
+        </span>
+        <span class="inline-flex items-center gap-2 rounded-xl bg-neutral-100 px-3 py-2 text-sm text-vroom-ink">
+          <i class="fas fa-gas-pump text-vroom-muted"></i> <%= fuel %>
+        </span>
+        <span class="inline-flex items-center gap-2 rounded-xl bg-neutral-100 px-3 py-2 text-sm text-vroom-ink">
+          <i class="fas fa-tachometer-alt text-vroom-muted"></i> <%= mpg %>
+        </span>
+        <span class="inline-flex items-center gap-2 rounded-xl bg-neutral-100 px-3 py-2 text-sm text-vroom-ink">
+          <i class="fas fa-cogs text-vroom-muted"></i> <%= transmission %>
+        </span>
+        <span class="inline-flex items-center gap-2 rounded-xl bg-neutral-100 px-3 py-2 text-sm text-vroom-ink">
+          <i class="fas fa-clock text-vroom-muted"></i> <%= onerec.duration || (days + ' days') %>
+        </span>
       </div>
 
-      <div class="rounded-2xl border border-vroom-line bg-vroom-canvas p-5">
-        <span class="text-4xl font-bold text-vroom-ink">$<%= onerec.daily_fee %></span>
-        <span class="ml-2 text-vroom-muted">per day</span>
-      </div>
+      <% if (onerec.featured || daily < 100) { %>
+        <div class="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+          <strong>Great deal!</strong> Priced lower than similar options for your trip.
+        </div>
+      <% } %>
 
-      <div class="grid gap-3 sm:grid-cols-2">
-        <div class="flex items-center gap-3 rounded-xl border border-vroom-line bg-white p-4">
-          <i class="fas fa-car text-vroom-accent"></i>
-          <div>
-            <p class="text-xs text-vroom-muted">Vehicle Type</p>
-            <p class="font-semibold"><%= onerec.vehicle_type %></p>
+      <div class="mt-8 border-t border-vroom-line pt-8">
+        <h2 class="text-lg font-semibold text-vroom-ink">Hosted by</h2>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex h-12 w-12 items-center justify-center rounded-full bg-vroom-ink text-lg font-semibold text-white">
+            V
           </div>
-        </div>
-        <div class="flex items-center gap-3 rounded-xl border border-vroom-line bg-white p-4">
-          <i class="fas fa-clock text-vroom-accent"></i>
           <div>
-            <p class="text-xs text-vroom-muted">Duration</p>
-            <p class="font-semibold"><%= onerec.duration %></p>
-          </div>
-        </div>
-        <div class="flex items-center gap-3 rounded-xl border border-vroom-line bg-white p-4">
-          <i class="fas fa-user text-vroom-accent"></i>
-          <div>
-            <p class="text-xs text-vroom-muted">Host ID</p>
-            <p class="font-semibold"><%= onerec.host_id %></p>
-          </div>
-        </div>
-        <div class="flex items-center gap-3 rounded-xl border border-vroom-line bg-white p-4">
-          <i class="fas fa-id-card text-vroom-accent"></i>
-          <div>
-            <p class="text-xs text-vroom-muted">Vehicle ID</p>
-            <p class="font-semibold"><%= onerec.vehicle_id %></p>
+            <p class="font-semibold text-vroom-ink">Vroom Host #<%= onerec.host_id %></p>
+            <p class="text-sm text-vroom-muted"><%= onerec.status %> · All-Star Host</p>
           </div>
         </div>
       </div>
 
-      <div class="space-y-3">
-        <form action="/catalog/add" method="post">
+      <div class="mt-8 border-t border-vroom-line pt-8">
+        <h2 class="text-lg font-semibold text-vroom-ink">About this car</h2>
+        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-vroom-muted">
+          Enjoy a clean, well-maintained <%= onerec.description %> ready for your next trip.
+          This <%= onerec.vehicle_type.toLowerCase() %> is listed as <strong class="text-vroom-ink"><%= onerec.status %></strong>
+          and available for flexible rental periods.
+        </p>
+      </div>
+    </div>
+
+    <!-- Right: booking card -->
+    <aside class="lg:sticky lg:top-24 lg:self-start">
+      <div class="rounded-2xl border border-vroom-line bg-white p-5 shadow-sm">
+        <div class="flex items-end gap-2">
+          <span class="text-sm text-vroom-muted line-through">$<%= listPrice %></span>
+          <span class="text-2xl font-bold text-vroom-ink">$<%= total.toFixed(0) %> total</span>
+        </div>
+        <p class="mt-1 text-sm text-vroom-muted">Before taxes · $<%= daily.toFixed(0) %>/day</p>
+
+        <form action="/catalog/add" method="post" class="mt-5 space-y-4">
           <input type="hidden" name="vehicle_id" value="<%= onerec.vehicle_id %>">
-          <button type="submit" class="btn-primary btn-block">
-            <i class="fas fa-calendar-check"></i> Book Now
+
+          <div>
+            <p class="mb-2 text-sm font-semibold text-vroom-ink">Your trip</p>
+            <div class="overflow-hidden rounded-xl border border-vroom-line">
+              <div class="grid grid-cols-2 border-b border-vroom-line">
+                <label class="border-r border-vroom-line px-3 py-2.5">
+                  <span class="block text-[11px] font-semibold uppercase tracking-wide text-vroom-muted">Trip start</span>
+                  <input type="date" name="trip_start" class="mt-1 w-full border-0 bg-transparent p-0 text-sm outline-none">
+                </label>
+                <label class="px-3 py-2.5">
+                  <span class="block text-[11px] font-semibold uppercase tracking-wide text-vroom-muted">Time</span>
+                  <select name="start_time" class="mt-1 w-full border-0 bg-transparent p-0 text-sm outline-none">
+                    <option>10:00 AM</option>
+                    <option>12:00 PM</option>
+                    <option>2:00 PM</option>
+                    <option>4:00 PM</option>
+                  </select>
+                </label>
+              </div>
+              <div class="grid grid-cols-2">
+                <label class="border-r border-vroom-line px-3 py-2.5">
+                  <span class="block text-[11px] font-semibold uppercase tracking-wide text-vroom-muted">Trip end</span>
+                  <input type="date" name="trip_end" class="mt-1 w-full border-0 bg-transparent p-0 text-sm outline-none">
+                </label>
+                <label class="px-3 py-2.5">
+                  <span class="block text-[11px] font-semibold uppercase tracking-wide text-vroom-muted">Time</span>
+                  <select name="end_time" class="mt-1 w-full border-0 bg-transparent p-0 text-sm outline-none">
+                    <option>10:00 AM</option>
+                    <option>12:00 PM</option>
+                    <option>2:00 PM</option>
+                    <option>4:00 PM</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="mb-2 text-sm font-semibold text-vroom-ink">Pickup &amp; return location</p>
+            <div class="flex items-center justify-between rounded-xl border border-vroom-line px-3 py-3">
+              <div class="flex items-start gap-2">
+                <i class="fas fa-map-marker-alt mt-0.5 text-vroom-accent"></i>
+                <p class="text-sm text-vroom-ink">Chicago, IL 60604</p>
+              </div>
+              <i class="fas fa-pen text-xs text-vroom-muted"></i>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary w-full py-3 text-base">
+            Continue
           </button>
+          <p class="text-center text-xs text-vroom-muted">You won't be charged yet</p>
         </form>
-        <a href="/catalog" class="btn-secondary btn-block">
-          <i class="fas fa-arrow-left"></i> Back to Catalog
-        </a>
       </div>
-    </div>
+    </aside>
   </div>
 </section>

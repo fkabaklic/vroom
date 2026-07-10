@@ -1,29 +1,29 @@
-<section class="border-b border-vroom-line bg-white">
-  <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold text-vroom-ink sm:text-4xl">Available Cars</h1>
-    <p class="mt-2 text-vroom-muted">Browse our complete collection of vehicles</p>
-  </div>
-</section>
-
-<section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-  <div class="mb-8 flex items-end justify-between gap-4">
+<section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+  <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
     <div>
-      <h2 class="text-2xl font-bold text-vroom-ink">All Vehicles</h2>
-      <p class="mt-1 text-sm text-vroom-muted">Choose from our complete fleet</p>
+      <h1 class="text-2xl font-bold tracking-tight text-vroom-ink sm:text-3xl">Available cars</h1>
+      <p class="mt-1 text-sm text-vroom-muted">Browse the full Vroom fleet</p>
     </div>
   </div>
 
+  <div class="mb-8 flex gap-2 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <a href="/catalog" class="category-pill active"><i class="fas fa-border-all"></i> All</a>
+    <a href="/search?searchcriteria=Luxury" class="category-pill"><i class="fas fa-gem"></i> Luxury</a>
+    <a href="/search?searchcriteria=Electric" class="category-pill"><i class="fas fa-bolt"></i> Electric</a>
+    <a href="/search?searchcriteria=Sports" class="category-pill"><i class="fas fa-flag-checkered"></i> Sports</a>
+  </div>
+
   <% if (allrecs && allrecs.length > 0) { %>
-    <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+    <div class="grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <% allrecs.forEach((vehicle) => { %>
         <%- include('partials/vehicle-card', { vehicle: vehicle, showAddToCart: true }) %>
       <% }); %>
     </div>
   <% } else { %>
-    <div class="rounded-2xl border border-dashed border-vroom-line bg-white px-6 py-16 text-center">
+    <div class="rounded-3xl border border-dashed border-vroom-line px-6 py-16 text-center">
       <i class="fas fa-car-side text-4xl text-vroom-muted"></i>
       <p class="mt-4 text-lg font-medium text-vroom-ink">No vehicles available at the moment.</p>
-      <a href="/" class="btn-primary mt-6">Return Home</a>
+      <a href="/" class="btn-primary mt-6">Return home</a>
     </div>
   <% } %>
 </section>
